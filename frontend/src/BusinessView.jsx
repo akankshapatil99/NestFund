@@ -142,11 +142,9 @@ export default function BusinessView() {
 
   return (
     <div className="fade-in-section">
-      {showPreview && <ContractPreviewModal formData={form} aiAnalysis={aiAnalysis} onClose={() => setShowPreview(false)} onDeployComplete={(newListing) => {
-        // Form is kept as is to show success, when modal closes they can clear it if they want
-      }} />}
+      {showPreview && <ContractPreviewModal formData={form} aiAnalysis={aiAnalysis} onClose={() => setShowPreview(false)} />}
 
-      <section className="hero" style={{ minHeight: '80vh', paddingTop: '160px' }}>
+      <section className="hero container-responsive" style={{ minHeight: '80vh' }}>
         <div className="hero-grid">
           <div className="hero-content">
             <div className="hero-badge" style={{color:'var(--red)', background:'rgba(248,113,113,0.1)', borderColor:'rgba(248,113,113,0.2)'}}>
@@ -195,7 +193,7 @@ export default function BusinessView() {
       <div className="divider"></div>
 
       {/* FORM */}
-      <section id="biz-form" style={{padding:'80px 48px', maxWidth:'800px', margin:'0 auto'}}>
+      <section id="biz-form" className="container-responsive" style={{padding:'80px 24px', maxWidth:'800px', margin:'0 auto'}}>
         <div className="section-label">NEW LISTING</div>
         <div className="section-title">Create a Funding Proposal</div>
         <div className="section-sub">Fill in the details below. Our AI will structure a smart contract and publish your listing to investors.</div>
@@ -294,8 +292,8 @@ export default function BusinessView() {
             </div>
 
             {aiAnalysis ? (
-              <div style={{ display: 'grid', gridTemplateColumns: '80px 1fr', gap: '20px', alignItems: 'center' }}>
-                <div style={{ width: '80px', height: '80px', borderRadius: '50%', border: '4px solid var(--red)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', alignItems: 'center', textAlign:'center' }}>
+                <div style={{ width: '80px', height: '80px', borderRadius: '50%', border: '4px solid var(--red)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', flexShrink:0 }}>
                   <div style={{ fontSize: '24px', fontWeight: '800', fontFamily: 'Syne', color: 'var(--red)' }}>{aiAnalysis.score}</div>
                   <div style={{ fontSize: '9px', fontWeight: '700' }}>{aiAnalysis.rating}</div>
                 </div>
@@ -335,7 +333,7 @@ export default function BusinessView() {
           <div className="section-label" style={{color:'var(--red)'}}>PORTFOLIO</div>
           <div className="section-title" style={{marginBottom:'40px'}}>Your Active Raises</div>
 
-          <div className="opportunities" style={{gridTemplateColumns:'1fr 1fr'}}>
+          <div className="grid-1-1">
             {userListings.map(r => (
               <div key={r.name} className="opp-card">
                 <div className="opp-top">

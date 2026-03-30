@@ -115,7 +115,7 @@ export default function ExploreView({ onNavigate }) {
         </div>
       )}
 
-      <div style={{ maxWidth: '1300px', margin: '0 auto', padding: '0 48px' }}>
+      <div className="container-responsive">
         
         {/* Header Section — Centered and Clean */}
         <div style={{ marginBottom: '80px', textAlign: 'center' }}>
@@ -159,7 +159,7 @@ export default function ExploreView({ onNavigate }) {
         </div>
 
         {/* MAIN GRID */}
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '32px' }}>
+        <div className="grid-2-1">
           
           {/* Trends & Sector Performance */}
           <div className="dashboard-card" style={{ padding: '32px' }}>
@@ -179,10 +179,11 @@ export default function ExploreView({ onNavigate }) {
               </div>
             </div>
 
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', background: 'var(--border)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', background: 'var(--border)', overflowX: 'auto' }}>
               {trends.map((t, i) => (
                 <div key={i} className="asset-trending-row" style={{ 
-                  display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1fr', 
+                  display: 'grid', gridTemplateColumns: 'minmax(150px, 2fr) 1fr 1fr 1fr', 
+                  minWidth: '600px',
                   padding: '20px 0', background: 'var(--surface)',
                   alignItems: 'center'
                 }}>
@@ -275,7 +276,7 @@ export default function ExploreView({ onNavigate }) {
              The result is a platform where every transaction is settled on-chain and every risk is analysed by the AI — ensuring complete transparency and intelligent investment decisions.
            </p>
 
-           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '40px' }}>
+           <div className="grid-3">
               <div className="dashboard-card glass" style={{ padding: '30px' }}>
                  <div style={{ width: '40px', height: '40px', background: 'var(--teal-dim)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px', color: 'var(--teal)' }}>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
@@ -310,11 +311,12 @@ export default function ExploreView({ onNavigate }) {
 
         {/* Featured Card */}
         <div 
-          className="dashboard-card" 
+          className="dashboard-card featured-footer-card" 
           style={{ 
             marginTop: '80px', padding: '40px', 
             background: 'linear-gradient(135deg, var(--surface), var(--surface2))',
-            display: 'flex', justifyContent: 'space-between', alignItems: 'center'
+            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+            gap: '24px', flexWrap: 'wrap'
           }}
         >
           <div>

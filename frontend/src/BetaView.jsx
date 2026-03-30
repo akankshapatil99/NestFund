@@ -50,7 +50,7 @@ export default function BetaView({ walletAddress }) {
 
   return (
     <div className="fade-in-section" style={{ paddingTop: '120px', paddingBottom: '100px' }}>
-      <div style={{ maxWidth: '1300px', margin: '0 auto', padding: '0 48px' }}>
+      <div className="container-responsive">
 
         {/* HEADER */}
         <div style={{ marginBottom: '48px' }}>
@@ -72,7 +72,7 @@ export default function BetaView({ walletAddress }) {
         </div>
 
         {/* LIVE STATS STRIP */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', marginBottom: '40px' }}>
+        <div className="grid-4" style={{ marginBottom: '40px' }}>
           {[
             { label: 'Validators Joined', val: stats.userCount, color: 'var(--teal)' },
             { label: 'Transactions', val: stats.txCount, color: 'var(--gold)' },
@@ -86,7 +86,7 @@ export default function BetaView({ walletAddress }) {
           ))}
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: '32px' }}>
+        <div className="grid-2-1">
 
           {/* VALIDATOR WALL — all real users */}
           <div className="dashboard-card" style={{ padding: '32px' }}>
@@ -214,7 +214,7 @@ export default function BetaView({ walletAddress }) {
               No recent activity. Active investments will appear here in real-time.
             </div>
           ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px' }}>
+            <div className="grid-3">
               {recentTxs.slice(0, 6).map((tx, i) => {
                 const timeDiff = Math.floor((new Date() - new Date(tx.time)) / 60000);
                 const timeStr = timeDiff < 1 ? 'just now' : timeDiff < 60 ? `${timeDiff}m ago` : `${Math.floor(timeDiff / 60)}h ago`;

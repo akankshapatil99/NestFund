@@ -50,7 +50,7 @@ export default function LearnView({ portfolioVal }) {
             position: 'fixed', inset: '0', zIndex: '9999', 
             background: 'rgba(0,0,0,0.95)', display: 'flex', 
             alignItems: 'center', justifyContent: 'center',
-            padding: '40px'
+            padding: '20px'
           }}
           onClick={() => setActiveVideo(null)}
         >
@@ -120,7 +120,7 @@ export default function LearnView({ portfolioVal }) {
 
       {/* HERO — AI IS THE STAR */}
       <section style={{ paddingBottom: '60px' }}>
-        <div style={{ maxWidth: '1300px', margin: '0 auto', padding: '0 48px' }}>
+        <div className="container-responsive">
 
           {/* Centered Hero Typography */}
           <div style={{ textAlign: 'center', maxWidth: '900px', margin: '0 auto 60px' }}>
@@ -147,7 +147,7 @@ export default function LearnView({ portfolioVal }) {
           <NeRAChat embedded={true} />
 
           {/* Virtual Portfolio below the chat */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px', marginTop: '48px' }}>
+          <div className="grid-3" style={{ marginTop: '48px' }}>
             <div className="dashboard-card" style={{ padding: '20px' }}>
               <div className="pt-label">Virtual Profit Target</div>
               <div className="pt-value" style={{ fontSize: '28px' }}>+18.4% APY</div>
@@ -172,7 +172,7 @@ export default function LearnView({ portfolioVal }) {
           {/* LEARNING MODULES — PRE-CURATED */}
           <div style={{ marginTop: '80px' }}>
             <div className="section-label" style={{ marginBottom: '32px', textAlign: 'center' }}>VIRTUAL CLASSROOM · STREAMING NOW</div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '32px' }}>
+            <div className="grid-3" style={{ gap: '32px' }}>
               
               {modules.map(mod => (
                 <div key={mod.id} className="dashboard-card module-video-card" style={{ padding: '0', overflow: 'hidden', border: '1px solid var(--border)' }}>

@@ -1500,74 +1500,79 @@ input[type="range"]::-webkit-slider-thumb {
   to { transform: scale(1.05) translate(-2%, -2%); }
 }
 
-/* ═══════════════════════════════════════ */
-/* RESPONSIVE SYSTEM (Mobile / Tablet)     */
-/* ═══════════════════════════════════════ */
-
-@media (max-width: 1100px) {
-  .hero-grid, .chain-section, .opp-grid, .mode-cards, .opportunities {
-    grid-template-columns: 1fr 1fr !important;
-    gap: 32px !important;
-  }
+/* ══ RESPONSIVE UTILITIES ══ */
+.container-responsive {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 48px;
 }
 
 @media (max-width: 850px) {
-  nav { padding: 15px 24px !important; flex-wrap: wrap; gap: 15px; }
-  .mode-pill { 
-    position: static; 
-    transform: none; 
-    order: 3; 
-    width: 100%; 
-    justify-content: center;
-    overflow-x: auto;
-    padding: 6px;
+  .container-responsive {
+    padding: 0 24px;
   }
-  .mode-btn { padding: 6px 12px !important; font-size: 12px !important; white-space: nowrap; }
-  
-  .hero-grid, .chain-section, .opp-grid, .mode-cards, .opportunities {
+}
+
+.grid-2-1 {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 32px;
+}
+
+.grid-1-1 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+
+.grid-1-2 {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 32px;
+}
+
+.grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 1100px) {
+  .grid-2-1, .grid-1-2 { grid-template-columns: 1fr 1fr !important; }
+  .hero-grid { gap: 40px !important; }
+}
+
+@media (max-width: 850px) {
+  .grid-2-1, .grid-1-1, .grid-1-2, .grid-4, .grid-3, .hero-grid {
     grid-template-columns: 1fr !important;
     gap: 24px !important;
   }
-  .hero { padding-top: 160px !important; text-align: center; }
-  .hero-content h1 { font-size: 42px !important; margin: 0 auto 20px; }
-  .hero-sub { margin-left: auto; margin-right: auto; }
-  .hero-actions { justify-content: center; flex-direction: column; width: 100%; }
-  .btn-lg { width: 100%; justify-content: center; }
   
-  .stats-bar { 
-    grid-template-columns: 1fr 1fr !important; 
-    padding: 20px !important;
-  }
-  .stat-cell { padding: 15px !important; }
-
-  .section-title { font-size: 32px !important; }
-  .section { padding: 60px 24px !important; }
-  .invest-section { padding: 60px 24px !important; }
+  .hide-mobile { display: none !important; }
   
-  .footer-right { text-align: left !important; margin-top: 30px; }
-  footer { flex-direction: column; align-items: flex-start !important; padding: 40px 24px !important; }
-
-  /* Modals */
-  .modal-box { padding: 20px !important; border-radius: 0 !important; height: 100vh !important; max-height: 100vh !important; }
-  .modal-overlay { padding: 0 !important; }
+  h1 { font-size: 38px !important; }
+  h2 { font-size: 28px !important; }
+  
+  .section-padding { padding-top: 60px !important; padding-bottom: 60px !important; }
+  .hero-padding { padding-top: 140px !important; padding-bottom: 60px !important; }
+  .hero { padding: 140px 24px 60px !important; text-align: center; }
+  .hero-actions { justify-content: center; }
+  
+  footer { flex-direction: column; gap: 32px; padding: 40px 24px !important; text-align: center; }
+  .footer-right { text-align: center !important; }
 }
 
 @media (max-width: 500px) {
-  h1 { font-size: 34px !important; }
-  .pt-value { font-size: 32px !important; }
-  .nera-fab { bottom: 16px; right: 16px; padding: 10px 18px !important; }
-  .nera-fab-label { display: none; }
-  .nera-float-overlay { 
-    right: 0 !important; 
-    bottom: 0 !important; 
-    width: 100% !important; 
-    height: 100% !important; 
-    border-radius: 0 !important; 
-  }
-  .nera-chat-container.floating-box { border-radius: 0 !important; }
-  
-  .stats-bar { grid-template-columns: 1fr !important; }
+  h1 { font-size: 32px !important; }
+  .container-responsive { padding: 0 20px; }
 }
+
 /* ── TICKER BAR ── */
 .ticker-bar {
   background: rgba(8, 12, 18, 0.95);
