@@ -4,6 +4,8 @@
 
 ### *Fractional Investing. On-Chain. AI-Powered.*
 
+**🌐 Live Platform:** [https://nestfund-phi.vercel.app](https://nestfund-phi.vercel.app)
+
 [![Stellar](https://img.shields.io/badge/Blockchain-Stellar%20%2F%20Soroban-7B2FBE?style=for-the-badge&logo=stellar&logoColor=white)](https://stellar.org)
 [![React](https://img.shields.io/badge/Frontend-React%2019%20%2B%20Vite%208-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
 [![Node.js](https://img.shields.io/badge/Backend-Node.js%20%2B%20Express-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org)
