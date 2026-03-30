@@ -102,7 +102,7 @@ export default function BetaView({ walletAddress }) {
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {users.map((u, i) => {
-                  const timeDiff = Math.floor((new Date() - new Date(u.lastLogin)) / 60000);
+                  const timeDiff = Math.floor((new Date() - new Date(u.lastlogin || u.lastLogin)) / 60000);
                   const timeStr = timeDiff < 1 ? 'just now' : timeDiff < 60 ? `${timeDiff}m ago` : timeDiff < 1440 ? `${Math.floor(timeDiff / 60)}h ago` : `${Math.floor(timeDiff / 1440)}d ago`;
                   const isMe = walletAddress && u.address === walletAddress;
                   return (
@@ -231,14 +231,14 @@ export default function BetaView({ walletAddress }) {
                       ₹{Number(tx.amount).toLocaleString('en-IN')} → {tx.asset}
                     </div>
                     <a 
-                      href={`https://stellar.expert/explorer/testnet/tx/${tx.txHash}`}
+                      href={`https://stellar.expert/explorer/testnet/tx/${tx.txhash || tx.txHash}`}
                       target="_blank"
                       rel="noreferrer"
                       style={{ fontSize: '10px', color: 'rgba(255,255,255,0.3)', marginTop: '4px', fontFamily: 'JetBrains Mono', textDecoration: 'none' }}
                       onMouseOver={(e) => e.target.style.color = 'var(--gold)'}
                       onMouseOut={(e) => e.target.style.color = 'rgba(255,255,255,0.3)'}
                     >
-                      {tx.txHash.slice(0, 16)}...
+                      {(tx.txhash || tx.txHash || "").slice(0, 16)}...
                     </a>
                   </div>
                 );
