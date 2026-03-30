@@ -1,0 +1,103 @@
+{
+  "users": [
+    {
+      "address": "GD2AADMYXKJKEYR6L72D5XXEUBCK3OJR2BANG7RKSHLYM72D3S3OAAWO",
+      "name": "akanksha patil",
+      "email": "akankshapatil2099@gmail.com",
+      "joinedAt": "2026-03-29T19:02:44.237Z",
+      "lastLogin": "2026-03-29T20:24:49.424Z"
+    },
+    {
+      "address": "GBA5ANK4XLTB5GK5SCMDEPBOYJEDN4LGJMBKILDFSNPETONQ3DMVP2WP",
+      "name": "mahee patil",
+      "email": "maheepatil06@gmail.com",
+      "joinedAt": "2026-03-30T09:49:40.534Z",
+      "lastLogin": "2026-03-30T09:49:40.535Z"
+    }
+  ],
+  "transactions": [
+    {
+      "address": "GD2AADMYXKJKEYR6L72D5XXEUBCK3OJR2BANG7RKSHLYM72D3S3OAAWO",
+      "type": "REVENUE SHARING",
+      "amount": 1000,
+      "asset": "D2C Brand Growth Fund",
+      "txHash": "7f6cd8e2f4e098b55b69f08e5f48b6f595baec6ade3c46ff5c81d679f507ba5c",
+      "time": "2026-03-29T19:02:44.237Z"
+    },
+    {
+      "address": "GD2AADMYXKJKEYR6L72D5XXEUBCK3OJR2BANG7RKSHLYM72D3S3OAAWO",
+      "type": "INVOICE FINANCING",
+      "amount": 500,
+      "asset": "Logistics Invoice Pool",
+      "txHash": "07789df4d99f5fd71b39bbcc8923e21ef8fd952a001751a436ed63b8a97aa932",
+      "time": "2026-03-29T20:25:53.221Z"
+    },
+    {
+      "address": "GBA5ANK4XLTB5GK5SCMDEPBOYJEDN4LGJMBKILDFSNPETONQ3DMVP2WP",
+      "type": "INVOICE FINANCING",
+      "amount": 2500,
+      "asset": "Healthcare Supply Chain",
+      "txHash": "8f242c6de805a9ddfb95deb3cfbb240f5ffa81a988c36835deed87723e457ac1",
+      "time": "2026-03-30T09:51:26.199Z"
+    }
+  ],
+  "listings": [
+    {
+      "id": 1,
+      "type": "INVOICE FINANCING",
+      "risk": "LOW RISK",
+      "riskClass": "risk-low",
+      "name": "Logistics Invoice Pool",
+      "company": "TranzFreight Ltd · Mumbai, IN",
+      "returnVal": "18.4%",
+      "returnClass": "val-green",
+      "label": "Expected Return",
+      "duration": "60 days",
+      "funded": 1,
+      "raisedAmount": 500,
+      "targetAmount": 50000,
+      "remaining": "₹49,500",
+      "aiScore": "8.7",
+      "minInvest": 500,
+      "xlmRate": 0.2
+    },
+    {
+      "id": 2,
+      "type": "REVENUE SHARING",
+      "risk": "MED RISK",
+      "riskClass": "risk-med",
+      "name": "D2C Brand Growth Fund",
+      "company": "UrbanThreads Co · Bengaluru, IN",
+      "returnVal": "22.1%",
+      "returnClass": "val-gold",
+      "label": "Projected APY",
+      "duration": "12 months",
+      "funded": 1,
+      "raisedAmount": 1000,
+      "targetAmount": 100000,
+      "remaining": "₹99,000",
+      "aiScore": "7.4",
+      "minInvest": 1000,
+      "xlmRate": 0.2
+    },
+    {
+      "id": 3,
+      "type": "INVOICE FINANCING",
+      "risk": "LOW RISK",
+      "riskClass": "risk-low",
+      "name": "Healthcare Supply Chain",
+      "company": "MediLink Pvt Ltd · Pune, IN",
+      "returnVal": "15.8%",
+      "returnClass": "val-green",
+      "label": "Expected Return",
+      "duration": "45 days",
+      "funded": 3,
+      "raisedAmount": 2500,
+      "targetAmount": 75000,
+      "remaining": "₹72,500",
+      "aiScore": "9.1",
+      "minInvest": 250,
+      "xlmRate": 0.2
+    }
+  ]
+}
