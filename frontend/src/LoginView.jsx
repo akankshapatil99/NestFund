@@ -172,7 +172,7 @@ export default function LoginView({ onLogin }) {
                 </label>
                 <input
                   type="text"
-                  placeholder="Aakanksha Sharma"
+                  placeholder="Akanksha Patil"
                   value={name}
                   onChange={e => { setName(e.target.value); setErrors(p => ({ ...p, name: '' })); }}
                   style={inputStyle('name')}
