@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { setAllowed, getAddress } from '@stellar/freighter-api';
+import { setAllowed, getAddress, isConnected } from '@stellar/freighter-api';
 
 export default function LoginView({ onLogin }) {
   const [step, setStep] = useState('form');   // 'form' | 'connecting' | 'done'
@@ -15,6 +15,9 @@ export default function LoginView({ onLogin }) {
     setIsConnecting(true);
     setServerError('');
     try {
+      const connected = await isConnected();
+      if (!connected) throw new Error('Freighter not detected. If on mobile, please open NestFund inside the Freighter App browser.');
+      
       const allowed = await setAllowed();
       if (allowed.error) throw new Error(allowed.error);
       const result = await getAddress();
@@ -239,11 +242,14 @@ export default function LoginView({ onLogin }) {
                   </button>
                 )}
                 {errors.freighter && <div style={{ color: 'var(--red)', fontSize: '11px', marginTop: '4px' }}>! {errors.freighter}</div>}
-                <div style={{ fontSize: '11px', color: 'var(--muted)', marginTop: '6px' }}>
+                <div style={{ fontSize: '11px', color: 'var(--muted)', marginTop: '8px', lineHeight: '1.4' }}>
                   Don't have Freighter?{' '}
                   <a href="https://freighter.app" target="_blank" rel="noreferrer" style={{ color: 'var(--teal)', textDecoration: 'none' }}>
-                    Install it free →
+                    Install on Desktop/Mobile →
                   </a>
+                  <div style={{ marginTop: '3px', color: 'rgba(255,255,255,0.4)' }}>
+                    Mobile Users: You must open this site inside the Freighter mobile app's "Browser" tab.
+                  </div>
                 </div>
               </div>
 
