@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { setAllowed, getAddress, isConnected } from '@stellar/freighter-api';
-import albedo from '@albedo-link/intent';
+import albedoLib from '@albedo-link/intent';
+
+const albedo = albedoLib?.default || albedoLib;
 
 export default function LoginView({ onLogin }) {
   const [step, setStep] = useState('form');   // 'form' | 'connecting' | 'done'
@@ -36,10 +38,21 @@ export default function LoginView({ onLogin }) {
     setIsConnecting(true);
     setServerError('');
     try {
-      const res = await albedo.publicKey({});
-      setFreighterAddress(res.pubkey);
+      if (!albedo || typeof albedo.publicKey !== 'function') {
+        throw new Error('Albedo library not loaded correctly. Please refresh and try again.');
+      }
+      // Albedo works best when called directly in the click handler microtask
+      const res = await albedo.publicKey({
+          token: Math.random().toString(36).substring(2)
+      });
+      if (res && (res.pubkey || res.publicKey)) {
+        setFreighterAddress(res.pubkey || res.publicKey);
+      } else {
+        throw new Error('No public key received from Albedo.');
+      }
     } catch (err) {
-      setServerError('Albedo login cancelled or failed.');
+      console.error('Albedo Error:', err);
+      setServerError('Albedo error: ' + (err.message || 'Verification failed.'));
     } finally {
       setIsConnecting(false);
     }
