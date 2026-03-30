@@ -1,7 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { setAllowed, getAddress, signTransaction } from '@stellar/freighter-api';
+import albedoLib from '@albedo-link/intent';
 import * as StellarSdk from 'stellar-sdk';
+
+const albedo = albedoLib?.default || albedoLib;
 
 const HORIZON_URL = 'https://horizon-testnet.stellar.org';
 const server = new StellarSdk.Horizon.Server(HORIZON_URL);
@@ -245,7 +248,8 @@ function InvestModal({ opp, onClose, walletAddress, onSuccess }) {
 
   const handleInvest = async () => {
     if (!walletAddress) {
-      setError('Please connect your Freighter wallet first.');
+      const walletType = localStorage.getItem('nestfund_wallet_type') || 'freighter';
+      setError(`Please connect your ${walletType === 'albedo' ? 'Albedo' : 'Freighter'} wallet first.`);
       return;
     }
     if (amount < (opp.mininvest || 0)) {
@@ -286,17 +290,30 @@ function InvestModal({ opp, onClose, walletAddress, onSuccess }) {
         .setNetworkPassphrase(StellarSdk.Networks.TESTNET)
         .build();
 
-      setStatus('Awaiting Sign-off (Freighter popup)...');
+      const walletType = localStorage.getItem('nestfund_wallet_type') || 'freighter';
       const xdr = transaction.toXDR();
-      const signedResponse = await signTransaction(xdr, { 
-        networkPassphrase: StellarSdk.Networks.TESTNET,
-        network: 'TESTNET' 
-      });
+      let signedXdr;
 
-      if (signedResponse.error) throw new Error(`Signing error: ${signedResponse.error}`);
+      if (walletType === 'albedo') {
+        setStatus('Awaiting Sign-off (Albedo popup)...');
+        const albedoRes = await albedo.tx({
+          xdr,
+          network: 'testnet',
+          submit: false
+        });
+        signedXdr = albedoRes.signed_envelope_xdr;
+      } else {
+        setStatus('Awaiting Sign-off (Freighter popup)...');
+        const signedResponse = await signTransaction(xdr, { 
+          networkPassphrase: StellarSdk.Networks.TESTNET,
+          network: 'TESTNET' 
+        });
+        if (signedResponse.error) throw new Error(`Signing error: ${signedResponse.error}`);
+        signedXdr = signedResponse.signedTxXdr;
+      }
 
       setStatus('Broadcasting to Global Ledger...');
-      const txToSubmit = StellarSdk.TransactionBuilder.fromXDR(signedResponse.signedTxXdr, StellarSdk.Networks.TESTNET);
+      const txToSubmit = StellarSdk.TransactionBuilder.fromXDR(signedXdr, StellarSdk.Networks.TESTNET);
       const response = await server.submitTransaction(txToSubmit);
       const txHash = response.hash;
 

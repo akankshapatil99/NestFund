@@ -9,6 +9,7 @@ export default function LoginView({ onLogin }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [freighterAddress, setFreighterAddress] = useState('');
+  const [walletType, setWalletType] = useState('freighter'); // 'freighter' | 'albedo'
   const [errors, setErrors] = useState({});
   const [serverError, setServerError] = useState('');
   const [isConnecting, setIsConnecting] = useState(false);
@@ -27,6 +28,7 @@ export default function LoginView({ onLogin }) {
       const key = typeof result === 'string' ? result : result.address || result.publicKey;
       if (!key) throw new Error('Could not read wallet address.');
       setFreighterAddress(key);
+      setWalletType('freighter');
     } catch (err) {
       setServerError('Freighter error: ' + err.message);
     } finally {
@@ -47,6 +49,7 @@ export default function LoginView({ onLogin }) {
       });
       if (res && (res.pubkey || res.publicKey)) {
         setFreighterAddress(res.pubkey || res.publicKey);
+        setWalletType('albedo');
       } else {
         throw new Error('No public key received from Albedo.');
       }
@@ -92,6 +95,7 @@ export default function LoginView({ onLogin }) {
       localStorage.setItem('nestfund_session', freighterAddress);
       localStorage.setItem('nestfund_name', name.trim());
       localStorage.setItem('nestfund_email', email.trim());
+      localStorage.setItem('nestfund_wallet_type', walletType);
       setStep('done');
       setTimeout(() => onLogin(freighterAddress), 1200);
     } catch (err) {
