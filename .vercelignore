@@ -8,7 +8,7 @@ dist-ssr
 NF videos
 .env
 .env.local
-*.mp4
+
 *.rlib
 *.node
 *.exe
