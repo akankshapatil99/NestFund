@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { setAllowed, getAddress, isConnected } from '@stellar/freighter-api';
+import albedo from '@albedo-link/intent';
 
 export default function LoginView({ onLogin }) {
   const [step, setStep] = useState('form');   // 'form' | 'connecting' | 'done'
@@ -16,7 +17,7 @@ export default function LoginView({ onLogin }) {
     setServerError('');
     try {
       const connected = await isConnected();
-      if (!connected) throw new Error('Freighter not detected. If on mobile, please open NestFund inside the Freighter App browser.');
+      if (!connected) throw new Error('Freighter not detected. If on mobile, please use Albedo below.');
       
       const allowed = await setAllowed();
       if (allowed.error) throw new Error(allowed.error);
@@ -26,6 +27,19 @@ export default function LoginView({ onLogin }) {
       setFreighterAddress(key);
     } catch (err) {
       setServerError('Freighter error: ' + err.message);
+    } finally {
+      setIsConnecting(false);
+    }
+  };
+
+  const handleConnectAlbedo = async () => {
+    setIsConnecting(true);
+    setServerError('');
+    try {
+      const res = await albedo.publicKey({});
+      setFreighterAddress(res.pubkey);
+    } catch (err) {
+      setServerError('Albedo login cancelled or failed.');
     } finally {
       setIsConnecting(false);
     }
@@ -221,34 +235,45 @@ export default function LoginView({ onLogin }) {
                     >×</button>
                   </div>
                 ) : (
-                  <button
-                    onClick={handleConnectFreighter}
-                    disabled={isConnecting}
-                    style={{
-                      width: '100%', padding: '14px 16px', borderRadius: '12px',
-                      background: 'rgba(255,255,255,0.04)',
-                      border: `1px solid ${errors.freighter ? 'var(--red)' : 'rgba(255,255,255,0.1)'}`,
-                      color: isConnecting ? 'var(--muted)' : 'var(--text)',
-                      fontSize: '14px', cursor: 'pointer', fontFamily: 'DM Sans',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-                      transition: 'border-color 0.2s, background 0.2s',
-                    }}
-                  >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                      <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                    </svg>
-                    {isConnecting ? 'Connecting...' : 'Connect Freighter Wallet'}
-                  </button>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <button
+                      onClick={handleConnectFreighter}
+                      disabled={isConnecting}
+                      style={{
+                        flex: 1, padding: '14px 16px', borderRadius: '12px',
+                        background: 'rgba(255,255,255,0.04)',
+                        border: `1px solid ${errors.freighter ? 'var(--red)' : 'rgba(255,255,255,0.1)'}`,
+                        color: isConnecting ? 'var(--muted)' : 'var(--text)',
+                        fontSize: '14px', cursor: 'pointer', fontFamily: 'DM Sans',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                        transition: 'border-color 0.2s, background 0.2s',
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
+                      {isConnecting ? '...' : 'Connect Freighter'}
+                    </button>
+                    <button
+                      onClick={handleConnectAlbedo}
+                      disabled={isConnecting}
+                      style={{
+                        flex: 1, padding: '14px 16px', borderRadius: '12px',
+                        background: 'rgba(45,212,191,0.08)',
+                        border: '1px solid rgba(45,212,191,0.3)',
+                        color: 'var(--teal)',
+                        fontSize: '14px', cursor: 'pointer', fontFamily: 'DM Sans', fontWeight: 'bold',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+                        transition: 'border-color 0.2s, background 0.2s',
+                        whiteSpace: 'nowrap'
+                      }}
+                    >
+                      {isConnecting ? '...' : 'Albedo (Mobile)'}
+                    </button>
+                  </div>
                 )}
                 {errors.freighter && <div style={{ color: 'var(--red)', fontSize: '11px', marginTop: '4px' }}>! {errors.freighter}</div>}
                 <div style={{ fontSize: '11px', color: 'var(--muted)', marginTop: '8px', lineHeight: '1.4' }}>
-                  Don't have Freighter?{' '}
-                  <a href="https://freighter.app" target="_blank" rel="noreferrer" style={{ color: 'var(--teal)', textDecoration: 'none' }}>
-                    Install on Desktop/Mobile →
-                  </a>
-                  <div style={{ marginTop: '3px', color: 'rgba(255,255,255,0.4)' }}>
-                    Mobile Users: You must open this site inside the Freighter mobile app's "Browser" tab.
+                  <div style={{ color: 'rgba(255,255,255,0.4)', marginBottom: '4px' }}>
+                    <strong>Mobile Users:</strong> Because browser extensions aren't allowed on phones, use the "Albedo" button to securely log in directly via the web window.
                   </div>
                 </div>
               </div>
