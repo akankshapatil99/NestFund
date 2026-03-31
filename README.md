@@ -1,23 +1,17 @@
 <div align="center">
 
-# 🪺 NestFund
+# NestFund
 
 ### *Fractional Investing. On-Chain. AI-Powered.*
 
-**🌐 Live Platform:** [https://nestfund-phi.vercel.app](https://nestfund-phi.vercel.app)
-**📊 Project Spreadsheet:** [NestFund Data & Tracking](https://docs.google.com/spreadsheets/d/14BVVjDBkzcaf6usZwAAibzn9z-AfrcMyW_Yz-LIUDTE/edit?usp=sharing)
-
-[![Stellar](https://img.shields.io/badge/Blockchain-Stellar%20%2F%20Soroban-7B2FBE?style=for-the-badge&logo=stellar&logoColor=white)](https://stellar.org)
-[![React](https://img.shields.io/badge/Frontend-React%2019%20%2B%20Vite%208-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
-[![Node.js](https://img.shields.io/badge/Backend-Node.js%20%2B%20Express-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org)
-[![Supabase](https://img.shields.io/badge/Database-Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com)
-[![Groq](https://img.shields.io/badge/AI-Groq%20Llama%203.3-F55036?style=for-the-badge)](https://groq.com)
+**Live Platform:** [https://nestfund-phi.vercel.app](https://nestfund-phi.vercel.app)
+**Project Spreadsheet:** [NestFund Data & Tracking](https://docs.google.com/spreadsheets/d/14BVVjDBkzcaf6usZwAAibzn9z-AfrcMyW_Yz-LIUDTE/edit?usp=sharing)
 
 </div>
 
 ---
 
-## 🌟 What is NestFund?
+## What is NestFund?
 
 **NestFund** is a decentralized crowdfunding platform that allows everyday investors to take **fractional ownership** in real-world businesses — all enforced by **Soroban smart contracts** on the **Stellar blockchain**. It's augmented with **NeRA**, an AI advisor powered by Groq's Llama 3.3 70B, providing real-time risk analysis, market intelligence, and educational guidance.
 
@@ -25,21 +19,21 @@
 
 ---
 
-## ✨ Key Features
+## Key Features
 
 | Feature | Description |
 |---|---|
-| 🔗 **On-Chain Investments** | Every investment is a real Stellar XLM transaction signed via Freighter wallet |
-| 🤖 **NeRA AI Advisor** | Real-time risk auditing, market intelligence, and conversational investment Q&A |
-| 📊 **3D Interactive UI** | Immersive Three.js visualizations including a live network globe and animated dashboards |
-| 🏢 **Business Listing Flow** | Businesses submit proposals, get AI risk-audited, and receive fractional funding |
-| 📈 **Live Portfolio Tracking** | Investors track all on-chain activity and portfolio exposure in real-time |
-| 🎓 **Learn Mode** | Interactive educational modules teaching DeFi, blockchain, and investing fundamentals |
-| 🌐 **Explore Mode** | AI-generated market insights and trending business sectors |
+| **On-Chain Investments** | Every investment is a real Stellar XLM transaction signed via Freighter wallet |
+| **NeRA AI Advisor** | Real-time risk auditing, market intelligence, and conversational investment Q&A |
+| **3D Interactive UI** | Immersive Three.js visualizations including a live network globe and animated dashboards |
+| **Business Listing Flow** | Businesses submit proposals, get AI risk-audited, and receive fractional funding |
+| **Live Portfolio Tracking** | Investors track all on-chain activity and portfolio exposure in real-time |
+| **Learn Mode** | Interactive educational modules teaching DeFi, blockchain, and investing fundamentals |
+| **Explore Mode** | AI-generated market insights and trending business sectors |
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 
 ```
 nestfund/
@@ -68,19 +62,19 @@ nestfund/
 
 ---
 
-## 🏛️ Architecture
+## Architecture
 
 NestFund is a 4-layer system:
 
 ```
-[ React Frontend ] ←→ [ Groq AI / NeRA ]
-        ↕                      
-[ Express Backend ] ←→ [ Supabase (PostgreSQL) ]
-        ↕
+[ React Frontend ] <-> [ Groq AI / NeRA ]
+        |                      
+[ Express Backend ] <-> [ Supabase (PostgreSQL) ]
+        |
 [ Stellar Network / Soroban Smart Contracts ]
 ```
 
-📄 **See [ARCHITECTURE.md](./ARCHITECTURE.md) for the complete architecture document**, including:
+**See [ARCHITECTURE.md](./ARCHITECTURE.md) for the complete architecture document**, including:
 - Full system diagrams
 - API endpoint reference
 - Smart contract lifecycle
@@ -90,7 +84,7 @@ NestFund is a 4-layer system:
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -127,18 +121,18 @@ SUPABASE_KEY=your_supabase_anon_key
 cd frontend
 npm install
 npm run dev
-# → http://localhost:5173
+# -> http://localhost:5173
 
 # Terminal 2 — Backend
 cd backend
 npm install
 npm run dev
-# → http://localhost:5001
+# -> http://localhost:5001
 ```
 
 ---
 
-## 🔗 Smart Contract
+## Smart Contract
 
 The `nestfund_crowdfund` Soroban contract (Rust) manages all on-chain escrow:
 
@@ -158,7 +152,7 @@ stellar contract deploy --wasm target/wasm32-unknown-unknown/release/nestfund_cr
 
 ---
 
-## 🤖 NeRA — AI Advisor
+## NeRA — AI Advisor
 
 NeRA (NestFund Real-time Advisor) is integrated directly into 4 core flows:
 
@@ -171,20 +165,20 @@ NeRA (NestFund Real-time Advisor) is integrated directly into 4 core flows:
 
 ---
 
-## 📜 MVP Requirements Status
+## MVP Requirements Status
 
 | Requirement | Status |
 |---|---|
-| ✅ Fully Functional DApp | Backend connected to Supabase, 3D interactive UI |
-| ✅ Blockchain Integration | On-chain fractional investments via Freighter / Soroban |
-| ✅ AI Real-time Advisor | Risk auditing, market intelligence & tutoring via NeRA (Groq) |
-| ✅ Technical Documentation | `ARCHITECTURE.md` (10 sections) + full `README.md` |
-| ✅ Development History | 10+ meaningful commits in repository |
-| ✅ Live Deployment | Deployed on Vercel |
+| Fully Functional DApp | Done |
+| Blockchain Integration | Done |
+| AI Real-time Advisor | Done |
+| Technical Documentation | Done |
+| Development History | Done |
+| Live Deployment | Done |
 
 ---
 
-## 🗓️ Development History
+## Development History
 
 This repository reflects a full development lifecycle with 10+ meaningful commits covering infrastructure setup, feature development, AI integration, blockchain wiring, and documentation.
 
@@ -204,7 +198,7 @@ This repository reflects a full development lifecycle with 10+ meaningful commit
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Category | Technology |
 |---|---|
@@ -217,25 +211,25 @@ This repository reflects a full development lifecycle with 10+ meaningful commit
 | AI | Groq (Llama 3.3 70B) |
 | Deployment | Vercel (Frontend SPA + Serverless Functions) |
 
-## 📊 Project Data & Tracking
+## Project Data & Tracking
 
 All project milestones, financial tracking, and development progress are documented in the live spreadsheet:
-[🔗 NestFund Master Tracking Sheet](https://docs.google.com/spreadsheets/d/14BVVjDBkzcaf6usZwAAibzn9z-AfrcMyW_Yz-LIUDTE/edit?usp=sharing)
+[NestFund Master Tracking Sheet](https://docs.google.com/spreadsheets/d/14BVVjDBkzcaf6usZwAAibzn9z-AfrcMyW_Yz-LIUDTE/edit?usp=sharing)
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please open an issue first to discuss what you'd like to change.
 
 ---
 
-## 📄 License
+## License
 
 MIT License © 2026 NestFund
 
 ---
 
 <div align="center">
-Built with ❤️ on Stellar | Powered by NeRA AI
+Built on Stellar | Powered by NeRA AI
 </div>
