@@ -47,6 +47,15 @@ export default function NeRAChat({ embedded = false, onClose }) {
   const inputRef = useRef(null);
 
   useEffect(() => {
+    // DIAGNOSTIC CHECK
+    if (import.meta.env.VITE_GROQ_API_KEY) {
+      console.log("[NeRA AI] API Key found (starts with " + import.meta.env.VITE_GROQ_API_KEY.slice(0, 7) + "...)");
+    } else {
+      console.warn("[NeRA AI] API Key NOT FOUND in process.env/Vite env. Check your .env setup!");
+    }
+  }, []);
+
+  useEffect(() => {
     if (feedRef.current) {
       feedRef.current.scrollTop = feedRef.current.scrollHeight;
     }
