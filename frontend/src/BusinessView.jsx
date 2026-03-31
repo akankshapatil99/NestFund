@@ -275,7 +275,7 @@ export default function BusinessView() {
                         'Content-Type': 'application/json'
                       },
                       body: JSON.stringify({
-                        model: 'llama-3.3-70b-versatile',
+                        model: 'llama3-70b-8192',
                         messages: [
                           { role: 'system', content: sysPrompt },
                           { role: 'user', content: userPrompt }

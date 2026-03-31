@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 
 const API_KEY = import.meta.env.VITE_GROQ_API_KEY;
 const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-const MODEL_NAME = 'llama-3.3-70b-versatile'; // Standard high-perf Groq model
+const MODEL_NAME = 'llama3-70b-8192'; // Standard high-availability model
 
 const SYSTEM_PROMPT = `You are NeRA (NestFund Real-time Advisor), an expert AI financial tutor and investment advisor for NestFund — an AI-powered fractional investment platform built on the Stellar blockchain using Soroban smart contracts.
 

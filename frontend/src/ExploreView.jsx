@@ -47,7 +47,7 @@ export default function ExploreView({ onNavigate }) {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            model: 'llama-3.3-70b-versatile',
+            model: 'llama3-70b-8192',
             messages: [{role:'system', content:sys}, {role:'user', content:body}]
           })
         });
