@@ -5,6 +5,7 @@
 ### *Fractional Investing. On-Chain. AI-Powered.*
 
 **Live Platform:** [https://nestfund-phi.vercel.app](https://nestfund-phi.vercel.app)
+**Live Demo Video:** [NestFund Live Demo (YouTube)](https://youtu.be/M52teeVEetU?si=5A2gpx4n351p6w57)
 **Project Spreadsheet:** [NestFund Data & Tracking](https://docs.google.com/spreadsheets/d/14BVVjDBkzcaf6usZwAAibzn9z-AfrcMyW_Yz-LIUDTE/edit?usp=sharing)
 **User Feedback:** [NestFund Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLSfmReM605364UPevWyErOFfoIYzkHOaIUtNz2uBYyEmGLkO5g/viewform?usp=publish-editor)
 
