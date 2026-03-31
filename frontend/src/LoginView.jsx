@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { setAllowed, getAddress, isConnected } from '@stellar/freighter-api';
 import albedoLib from '@albedo-link/intent';
 
@@ -6,13 +6,29 @@ const albedo = albedoLib?.default || albedoLib;
 
 export default function LoginView({ onLogin }) {
   const [step, setStep] = useState('form');   // 'form' | 'connecting' | 'done'
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState(localStorage.getItem('nf_temp_name') || '');
+  const [email, setEmail] = useState(localStorage.getItem('nf_temp_email') || '');
   const [freighterAddress, setFreighterAddress] = useState('');
   const [walletType, setWalletType] = useState('freighter'); // 'freighter' | 'albedo'
   const [errors, setErrors] = useState({});
   const [serverError, setServerError] = useState('');
   const [isConnecting, setIsConnecting] = useState(false);
+
+  // Persistence: update localStorage whenever name/email changes
+  useEffect(() => {
+    localStorage.setItem('nf_temp_name', name);
+    localStorage.setItem('nf_temp_email', email);
+  }, [name, email]);
+
+  // Restore state if we were in the middle of an Albedo flow
+  useEffect(() => {
+    const savedAddr = localStorage.getItem('nf_temp_addr');
+    const savedType = localStorage.getItem('nf_temp_type');
+    if (savedAddr && savedType) {
+      setFreighterAddress(savedAddr);
+      setWalletType(savedType);
+    }
+  }, []);
 
   // Auto-fetch Freighter address when user clicks the field area
   const handleConnectFreighter = async () => {
@@ -27,8 +43,11 @@ export default function LoginView({ onLogin }) {
       const result = await getAddress();
       const key = typeof result === 'string' ? result : result.address || result.publicKey;
       if (!key) throw new Error('Could not read wallet address.');
+      
       setFreighterAddress(key);
       setWalletType('freighter');
+      localStorage.setItem('nf_temp_addr', key);
+      localStorage.setItem('nf_temp_type', 'freighter');
     } catch (err) {
       setServerError('Freighter error: ' + err.message);
     } finally {
@@ -37,19 +56,26 @@ export default function LoginView({ onLogin }) {
   };
 
   const handleConnectAlbedo = async () => {
-    setIsConnecting(true);
+    // Albedo works best when called as directly as possible
     setServerError('');
+    setIsConnecting(true);
+
     try {
       if (!albedo || typeof albedo.publicKey !== 'function') {
-        throw new Error('Albedo library not loaded correctly. Please refresh and try again.');
+        throw new Error('Albedo library not loaded correctly. Please refresh.');
       }
-      // Albedo works best when called directly in the click handler microtask
+      
       const res = await albedo.publicKey({
           token: Math.random().toString(36).substring(2)
       });
+
       if (res && (res.pubkey || res.publicKey)) {
-        setFreighterAddress(res.pubkey || res.publicKey);
+        const addr = res.pubkey || res.publicKey;
+        setFreighterAddress(addr);
         setWalletType('albedo');
+        // Persist temp address in case of unexpected refresh after signing
+        localStorage.setItem('nf_temp_addr', addr);
+        localStorage.setItem('nf_temp_type', 'albedo');
       } else {
         throw new Error('No public key received from Albedo.');
       }
@@ -66,7 +92,7 @@ export default function LoginView({ onLogin }) {
     if (!name.trim()) e.name = 'Name is required';
     if (!email.trim()) e.email = 'Email is required';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e.email = 'Enter a valid email';
-    if (!freighterAddress) e.freighter = 'Please connect your Freighter wallet';
+    if (!freighterAddress) e.freighter = 'Please connect your Stellar wallet';
     return e;
   };
 
@@ -89,21 +115,24 @@ export default function LoginView({ onLogin }) {
         throw new Error(errorData.error || `Server Error ${res.status}`);
       }
 
-      const data = await res.json();
+      await res.json();
 
-      // Persist session
+      // Clear temp storage on success
+      localStorage.removeItem('nf_temp_name');
+      localStorage.removeItem('nf_temp_email');
+      localStorage.removeItem('nf_temp_addr');
+      localStorage.removeItem('nf_temp_type');
+
+      // Final session persistence
       localStorage.setItem('nestfund_session', freighterAddress);
       localStorage.setItem('nestfund_name', name.trim());
       localStorage.setItem('nestfund_email', email.trim());
       localStorage.setItem('nestfund_wallet_type', walletType);
+      
       setStep('done');
       setTimeout(() => onLogin(freighterAddress), 1200);
     } catch (err) {
       let msg = err.message;
-      try {
-        const errData = JSON.parse(err.message);
-        msg = errData.error || err.message;
-      } catch(e) {}
       setServerError(msg);
       setStep('form');
     }
@@ -232,7 +261,7 @@ export default function LoginView({ onLogin }) {
               {/* Freighter Address */}
               <div>
                 <label style={{ fontSize: '12px', color: 'var(--muted)', fontWeight: '600', letterSpacing: '0.5px', display: 'block', marginBottom: '6px' }}>
-                  FREIGHTER WALLET
+                  CONNECT WALLET
                 </label>
                 {freighterAddress ? (
                   <div style={{

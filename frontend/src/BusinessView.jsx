@@ -248,7 +248,7 @@ export default function BusinessView() {
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
               <div>
                 <div style={{ fontSize: '11px', color: 'var(--red)', fontWeight: '700', letterSpacing: '1px' }}>AI RISK ANALYSIS</div>
-                <div style={{ fontSize: '12px', color: 'var(--muted)' }}>Powered by Llama 3.3 70B [Groq]</div>
+                <div style={{ fontSize: '12px', color: 'var(--muted)' }}>Powered by Llama 3.3 70B Versatile [Groq]</div>
               </div>
               <button 
                 onClick={async () => {
@@ -261,21 +261,13 @@ export default function BusinessView() {
                     const sysPrompt = "You are the NestFund AI Risk Auditor. Analyze the funding request and return ONLY a valid JSON object with: 'score' (0-10), 'rating' (LOW, MEDIUM, HIGH), and 'summary' (max 120 chars).";
                     const userPrompt = `Company: ${form.company}, Type: ${form.assetType}, Amount: ₹${form.amount}, Business: ${form.description || 'Not provided'}`;
                     
-                    const apiKey = import.meta.env.VITE_GROQ_API_KEY;
-                    if (!apiKey || apiKey.includes('your_')) {
-                      setAiAnalysis({ score: '?', rating: 'ERROR', summary: 'Groq API Key missing or invalid. Check frontend/.env file.' });
-                      setIsAnalyzing(false);
-                      return;
-                    }
-                    
-                    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                    const res = await fetch('/api/ai/chat', {
                       method: 'POST',
                       headers: {
-                        'Authorization': `Bearer ${apiKey}`,
                         'Content-Type': 'application/json'
                       },
                       body: JSON.stringify({
-                        model: 'llama3-70b-8192',
+                        model: 'llama-3.3-70b-versatile',
                         messages: [
                           { role: 'system', content: sysPrompt },
                           { role: 'user', content: userPrompt }

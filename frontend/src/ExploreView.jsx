@@ -34,20 +34,13 @@ export default function ExploreView({ onNavigate }) {
         const sys = "You are the NestFund Alpha Engine. Review the current listings and return a SINGLE-SENTENCE professional market outlook (max 150 chars).";
         const body = `Listings: ${listings.map(l => l.name).join(', ')}. Volume: ₹${transactions.reduce((a,t)=>Number(a)+Number(t.amount || 0),0)}`;
         
-        const apiKey = import.meta.env.VITE_GROQ_API_KEY;
-        if (!apiKey || apiKey.includes('your_')) {
-          setMarketInsight('Secure Stellar Network node: Stable performance.');
-          return;
-        }
-
-        const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        const res = await fetch('/api/ai/chat', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${apiKey}`,
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            model: 'llama3-70b-8192',
+            model: 'llama-3.3-70b-versatile',
             messages: [{role:'system', content:sys}, {role:'user', content:body}]
           })
         });

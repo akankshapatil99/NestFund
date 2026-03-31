@@ -22,6 +22,19 @@ export default function InvestView({ walletAddress }) {
 
   const [userName, setUserName] = useState(localStorage.getItem('nestfund_name') || '');
 
+  // ── Recovery Logic for Albedo Redirects ──
+  useEffect(() => {
+    const pendingOppStr = localStorage.getItem('nf_pending_opp');
+    if (pendingOppStr && !selectedOpp) {
+      try {
+        const pendingOpp = JSON.parse(pendingOppStr);
+        setSelectedOpp(pendingOpp);
+      } catch (e) {
+        localStorage.removeItem('nf_pending_opp');
+      }
+    }
+  }, [selectedOpp]);
+
   // ── Fetch listings (called on mount and after each investment) ──
   const fetchListings = useCallback(() => {
     fetch(`${API}/api/listings`)
@@ -77,7 +90,7 @@ export default function InvestView({ walletAddress }) {
 
       {/* ─── Sector Performance Panel ─── */}
       <div style={{ marginBottom: '40px' }}>
-        <div className="dashboard-card glass" style={{ padding: '32px', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '24px' }}>
+        <div className="dashboard-card glass" style={{ border: '1px solid rgba(255,255,255,0.05)', borderRadius: '24px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
             <h3 style={{ fontFamily: 'Syne', fontSize: '20px' }}>Sector Performance</h3>
             <div style={{ display: 'flex', gap: '10px' }}>
@@ -94,10 +107,10 @@ export default function InvestView({ walletAddress }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', background: 'var(--border)', overflowX: 'auto' }}>
               {liveTrends.map((t, i) => (
                 <div key={i} className="asset-trending-row" style={{ 
-                  display: 'grid', gridTemplateColumns: 'minmax(150px, 2fr) 1fr 1fr 1fr', 
-                  minWidth: '600px',
-                  padding: '20px 0', background: 'var(--surface)', alignItems: 'center' 
-                }}>
+                   display: 'grid', gridTemplateColumns: 'minmax(150px, 2fr) 1fr 1fr 1fr', 
+                   minWidth: '700px',
+                   padding: '16px 0', background: 'var(--surface)', alignItems: 'center' 
+                 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                     <div className="asset-dot dot-gold" style={{ width: '40px', height: '40px', background: 'rgba(200,169,110,0.1)', borderRadius: '10px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
@@ -225,7 +238,12 @@ export default function InvestView({ walletAddress }) {
       {selectedOpp && (
         <InvestModal
           opp={selectedOpp}
-          onClose={() => setSelectedOpp(null)}
+          onClose={() => {
+            localStorage.removeItem('nf_pending_opp');
+            localStorage.removeItem('nf_pending_amount');
+            localStorage.removeItem('nf_pending_xdr');
+            setSelectedOpp(null);
+          }}
           walletAddress={walletAddress}
           onSuccess={(newTx) => {
             setHistory(prev => [newTx, ...prev]);
@@ -238,8 +256,8 @@ export default function InvestView({ walletAddress }) {
 }
 
 function InvestModal({ opp, onClose, walletAddress, onSuccess }) {
-  const [amount, setAmount] = useState(opp.mininvest || 0);
-  const [step, setStep] = useState('input');
+   const [amount, setAmount] = useState(Number(localStorage.getItem('nf_pending_amount')) || opp.mininvest || 0);
+   const [step, setStep] = useState(localStorage.getItem('nf_pending_xdr') ? 'prepared' : 'input');
   const [status, setStatus] = useState('');
   const [error, setError] = useState(null);
 
@@ -292,27 +310,68 @@ function InvestModal({ opp, onClose, walletAddress, onSuccess }) {
 
       const walletType = localStorage.getItem('nestfund_wallet_type') || 'freighter';
       const xdr = transaction.toXDR();
-      let signedXdr;
-
-      if (walletType === 'albedo') {
-        setStatus('Awaiting Sign-off (Albedo popup)...');
-        const albedoRes = await albedo.tx({
-          xdr,
-          network: 'testnet',
-          submit: false
-        });
-        signedXdr = albedoRes.signed_envelope_xdr;
-      } else {
+      
+       if (walletType === 'albedo') {
+         // FOR ALBEDO: We MUST call the intent directly from a user click to avoid popup blockers on mobile.
+         // We save the XDR and wait for the user to click the new "SIGN NOW" button.
+         localStorage.setItem('nf_pending_opp', JSON.stringify(opp));
+         localStorage.setItem('nf_pending_amount', amount.toString());
+         localStorage.setItem('nf_pending_xdr', xdr);
+         window.__pendingAlbedoXdr = xdr;
+         setStep('prepared');
+         setStatus('Investment Prepared');
+       } else {
+        // FOR FREIGHTER: Extensions usually handle the async context better, so we proceed immediately.
         setStatus('Awaiting Sign-off (Freighter popup)...');
         const signedResponse = await signTransaction(xdr, { 
           networkPassphrase: StellarSdk.Networks.TESTNET,
           network: 'TESTNET' 
         });
         if (signedResponse.error) throw new Error(`Signing error: ${signedResponse.error}`);
-        signedXdr = signedResponse.signedTxXdr;
+        handleSubmitSignedTx(signedResponse.signedTxXdr);
       }
+    } catch (err) {
+      console.error("Stellar Flow Error:", err);
+      setError(err.message || 'Transaction failed. Ensure Freighter is on Testnet.');
+      setStep('input');
+    }
+  };
 
-      setStatus('Broadcasting to Global Ledger...');
+   const handleAlbedoSign = async () => {
+     let xdr = window.__pendingAlbedoXdr || localStorage.getItem('nf_pending_xdr');
+     if (!xdr) {
+       setError("Transaction context lost. Please restart the investment.");
+       setStep('input');
+       return;
+     }
+
+    setStep('processing');
+    setStatus('Opening Albedo (Mobile Secure Pop-up)...');
+
+    try {
+      // Direct call to albedo.tx – NO AWAITS BEFORE THIS in this specific function call chain!
+      const albedoRes = await albedo.tx({
+        xdr,
+        network: 'testnet',
+        submit: false
+      });
+      
+      if (albedoRes.signed_envelope_xdr) {
+        await handleSubmitSignedTx(albedoRes.signed_envelope_xdr);
+      } else {
+        throw new Error("No signature received from Albedo.");
+      }
+    } catch (err) {
+      console.error("Albedo Sign Error:", err);
+      setError(err.message || "Signing failed. Pop-up may have been blocked.");
+      setStep('prepared'); // Stay here to let them try again
+    }
+  };
+
+  const handleSubmitSignedTx = async (signedXdr) => {
+    setStep('processing');
+    setStatus('Broadcasting to Global Ledger...');
+    try {
       const txToSubmit = StellarSdk.TransactionBuilder.fromXDR(signedXdr, StellarSdk.Networks.TESTNET);
       const response = await server.submitTransaction(txToSubmit);
       const txHash = response.hash;
@@ -335,15 +394,22 @@ function InvestModal({ opp, onClose, walletAddress, onSuccess }) {
         throw new Error(errorData.error || 'Ledger sync failed');
       }
       
-      const { tx } = await postRes.json();
-      onSuccess(tx);
-      setStep('success');
-    } catch (err) {
-      console.error("Stellar Flow Error:", err);
-      setError(err.message || 'Transaction failed. Ensure Freighter is on Testnet.');
-      setStep('input');
-    }
-  };
+       const { tx } = await postRes.json();
+       
+       // Success -> Clear all pending context
+       localStorage.removeItem('nf_pending_opp');
+       localStorage.removeItem('nf_pending_amount');
+       localStorage.removeItem('nf_pending_xdr');
+       window.__pendingAlbedoXdr = null;
+
+       onSuccess(tx);
+       setStep('success');
+     } catch (err) {
+       console.error("Submission Error:", err);
+       setError(err.message || 'Transaction failed during submission.');
+       setStep('input');
+     }
+   };
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -392,6 +458,37 @@ function InvestModal({ opp, onClose, walletAddress, onSuccess }) {
                 CONFIRM & SIGN XLM
               </button>
             </>
+          )}
+
+          {step === 'prepared' && (
+            <div style={{ textAlign: 'center', padding: '30px 0' }}>
+              <div style={{ width: '64px', height: '64px', background: 'rgba(255,191,0,0.1)', border: '2px solid var(--gold)', borderRadius: '50%', margin: '0 auto 20px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gold)', fontSize: '24px' }}>!</div>
+              <div className="dc-title" style={{ fontSize: '20px', color: 'var(--gold)' }}>Ready to Sign</div>
+              <p className="asset-meta" style={{ margin: '12px 0 24px', lineHeight: '1.5' }}>
+                On mobile, your browser requires a direct click to open the secure wallet window. Click the button below to authorize the ₹{Number(amount).toLocaleString('en-IN')} investment.
+              </p>
+              
+              {error && <div style={{ color: 'var(--red)', background: 'rgba(248,113,113,0.1)', padding: '10px', borderRadius: '8px', marginBottom: '15px', fontSize: '11px' }}>{error}</div>}
+
+              <button 
+                className="btn-primary" 
+                style={{ width: '100%', height: '54px', background: 'var(--gold)', color: '#000' }} 
+                onClick={handleAlbedoSign}
+              >
+                SIGN TRANSACTION NOW
+              </button>
+              <button 
+                onClick={() => {
+                  localStorage.removeItem('nf_pending_opp');
+                  localStorage.removeItem('nf_pending_amount');
+                  localStorage.removeItem('nf_pending_xdr');
+                  setStep('input');
+                }} 
+                style={{ background: 'none', border: 'none', color: 'var(--muted)', marginTop: '16px', cursor: 'pointer', fontSize: '12px' }}
+              >
+                ← Back to amount
+              </button>
+            </div>
           )}
 
           {step === 'processing' && (

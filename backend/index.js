@@ -212,6 +212,52 @@ app.post('/api/listings', async (req, res) => {
   res.json({ success: true, listing: data });
 });
 
+// ─── AI PROXY (Groq) ────────────────────────────────────────────────────
+app.post('/api/ai/chat', async (req, res) => {
+  const { messages, model, response_format, temperature, max_tokens } = req.body;
+  const apiKey = process.env.GROQ_API_KEY || process.env.VITE_GROQ_API_KEY;
+
+  if (!apiKey) {
+    return res.status(500).json({ 
+      error: { 
+        message: 'Groq API Key missing on server dashboard.',
+        type: 'config_error'
+      } 
+    });
+  }
+
+  try {
+    const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: model || 'llama-3.3-70b-versatile',
+        messages,
+        response_format,
+        temperature: temperature ?? 0.7,
+        max_tokens: max_tokens ?? 1024
+      })
+    });
+
+    const data = await groqRes.json();
+    if (!groqRes.ok) {
+        return res.status(groqRes.status).json(data);
+    }
+    res.json(data);
+  } catch (e) {
+    console.error('[AI Proxy Error]', e.message);
+    res.status(500).json({ 
+      error: { 
+        message: 'AI Proxy Error: ' + e.message,
+        type: 'proxy_error'
+      } 
+    });
+  }
+});
+
 if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => {
     console.log(`🚀 NestFund Backend: Now Connected to Supabase`);

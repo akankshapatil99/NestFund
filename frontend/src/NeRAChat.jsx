@@ -1,8 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 
-const API_KEY = import.meta.env.VITE_GROQ_API_KEY;
-const API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-const MODEL_NAME = 'llama3-70b-8192'; // Standard high-availability model
+const API_URL = '/api/ai/chat';
+const MODEL_NAME = 'llama-3.3-70b-versatile'; // Standard high-availability model
 
 const SYSTEM_PROMPT = `You are NeRA (NestFund Real-time Advisor), an expert AI financial tutor and investment advisor for NestFund — an AI-powered fractional investment platform built on the Stellar blockchain using Soroban smart contracts.
 
@@ -48,11 +47,10 @@ export default function NeRAChat({ embedded = false, onClose }) {
 
   useEffect(() => {
     // DIAGNOSTIC CHECK
-    if (import.meta.env.VITE_GROQ_API_KEY) {
-      console.log("[NeRA AI] API Key found (starts with " + import.meta.env.VITE_GROQ_API_KEY.slice(0, 7) + "...)");
-    } else {
-      console.warn("[NeRA AI] API Key NOT FOUND in process.env/Vite env. Check your .env setup!");
-    }
+    console.log("[NeRA AI] Initializing AI system — calling backend proxy...");
+    fetch('/api/stats')
+      .then(res => res.ok ? console.log("[NeRA AI] Backend connected ✅") : console.error("[NeRA AI] Backend connection status:", res.status))
+      .catch(e => console.error("[NeRA AI] Backend unreachable ❌", e.message));
   }, []);
 
   useEffect(() => {
@@ -84,7 +82,6 @@ export default function NeRAChat({ embedded = false, onClose }) {
       const res = await fetch(API_URL, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${API_KEY}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
@@ -96,7 +93,7 @@ export default function NeRAChat({ embedded = false, onClose }) {
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data?.error?.message || `Groq API Error: ${res.status}`);
+      if (!res.ok) throw new Error(data?.error?.message || data?.error || `Groq API Error: ${res.status}`);
 
       const reply = data.choices[0]?.message?.content;
       setMessages(prev => [...prev, { role: 'assistant', content: reply || "I'm sorry, I couldn't reach my brain." }]);
@@ -143,7 +140,7 @@ export default function NeRAChat({ embedded = false, onClose }) {
           </div>
           <div>
             <div className="nera-title">NeRA · AI Advisor</div>
-            <div className="nera-subtitle">Llama 3.3 70B [Groq] · Always available</div>
+            <div className="nera-subtitle">Llama 3.3 70B Versatile [Groq] · Always available</div>
           </div>
         </div>
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
