@@ -5,6 +5,7 @@
 ### *Fractional Investing. On-Chain. AI-Powered.*
 
 **🌐 Live Platform:** [https://nestfund-phi.vercel.app](https://nestfund-phi.vercel.app)
+**📊 Project Spreadsheet:** [NestFund Data & Tracking](https://docs.google.com/spreadsheets/d/14BVVjDBkzcaf6usZwAAibzn9z-AfrcMyW_Yz-LIUDTE/edit?usp=sharing)
 
 [![Stellar](https://img.shields.io/badge/Blockchain-Stellar%20%2F%20Soroban-7B2FBE?style=for-the-badge&logo=stellar&logoColor=white)](https://stellar.org)
 [![React](https://img.shields.io/badge/Frontend-React%2019%20%2B%20Vite%208-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
@@ -215,6 +216,11 @@ This repository reflects a full development lifecycle with 10+ meaningful commit
 | Database | Supabase (PostgreSQL) |
 | AI | Groq (Llama 3.3 70B) |
 | Deployment | Vercel (Frontend SPA + Serverless Functions) |
+
+## 📊 Project Data & Tracking
+
+All project milestones, financial tracking, and development progress are documented in the live spreadsheet:
+[🔗 NestFund Master Tracking Sheet](https://docs.google.com/spreadsheets/d/14BVVjDBkzcaf6usZwAAibzn9z-AfrcMyW_Yz-LIUDTE/edit?usp=sharing)
 
 ---
 

@@ -368,6 +368,10 @@ h1 .teal { color: var(--teal); }
   overflow: hidden;
   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 }
+
+@media (max-width: 850px) {
+  .dashboard-card { padding: 20px !important; }
+}
 .dashboard-card:hover { 
   border-color: rgba(200, 169, 110, 0.25);
   transform: translateY(-8px) scale(1.005);
@@ -1020,6 +1024,10 @@ input:focus, select:focus {
   position: relative;
   animation: fadeInPage 0.3s ease forwards;
 }
+
+@media (max-width: 500px) {
+  .modal-box { padding: 20px !important; border-radius: 16px; min-width: 95vw !important; }
+}
 .learn-modal { max-width: 600px; }
 .modal-header {
   display: flex;
@@ -1549,7 +1557,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 @media (max-width: 850px) {
-  .grid-2-1, .grid-1-1, .grid-1-2, .grid-4, .grid-3, .hero-grid {
+  .grid-2-1, .grid-1-1, .grid-1-2, .grid-4, .grid-3, .hero-grid, .opp-grid {
     grid-template-columns: 1fr !important;
     gap: 24px !important;
   }

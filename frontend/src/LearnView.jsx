@@ -70,7 +70,7 @@ export default function LearnView({ portfolioVal }) {
                 src={activeVideo.video}
                 autoPlay
                 controls
-                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
             ) : (
               <img 
@@ -133,7 +133,7 @@ export default function LearnView({ portfolioVal }) {
                 <span className="badge-dot" style={{ background: 'var(--teal)' }}></span>
                 Virtual Learning Environment · Powered by Groq AI
               </div>
-              <h1 style={{ letterSpacing: '-2px', textShadow: '0 10px 40px rgba(0,0,0,0.4)', marginBottom: '24px' }}>
+              <h1 style={{ letterSpacing: '-2px', textShadow: '0 10px 40px rgba(0,0,0,0.4)', marginBottom: '16px' }}>
                 Your Personal <span className="accent">AI Tutor.</span><br />
                 <span className="teal">Ask anything.</span>
               </h1>
@@ -170,14 +170,14 @@ export default function LearnView({ portfolioVal }) {
           </div>
 
           {/* LEARNING MODULES — PRE-CURATED */}
-          <div style={{ marginTop: '80px' }}>
-            <div className="section-label" style={{ marginBottom: '32px', textAlign: 'center' }}>VIRTUAL CLASSROOM · STREAMING NOW</div>
-            <div className="grid-3" style={{ gap: '32px' }}>
+          <div style={{ marginTop: '60px' }}>
+            <div className="section-label" style={{ marginBottom: '24px', textAlign: 'center' }}>VIRTUAL CLASSROOM · STREAMING NOW</div>
+            <div className="grid-3" style={{ gap: '12px' }}>
               
               {modules.map(mod => (
-                <div key={mod.id} className="dashboard-card module-video-card" style={{ padding: '0', overflow: 'hidden', border: '1px solid var(--border)' }}>
+                <div key={mod.id} className="dashboard-card module-video-card" style={{ padding: '0', overflow: 'hidden', border: '1px solid var(--border)', display: 'flex', flexDirection: 'column' }}>
                   <div 
-                    style={{ position: 'relative', height: '200px', width: '100%', cursor: 'pointer' }} 
+                    style={{ position: 'relative', height: '200px', width: '100%', cursor: 'pointer', flexShrink: 0 }} 
                     className="video-thumb"
                     onClick={() => setActiveVideo(mod)}
                   >
@@ -189,14 +189,14 @@ export default function LearnView({ portfolioVal }) {
                     </div>
                     <div style={{ position: 'absolute', bottom: '12px', right: '12px', background: 'rgba(0,0,0,0.7)', padding: '2px 8px', borderRadius: '4px', fontSize: '10px', color: '#fff' }}>{mod.dur}</div>
                   </div>
-                  <div style={{ padding: '24px' }}>
-                    <h3 style={{ fontFamily: 'Syne', fontSize: '18px', marginBottom: '8px' }}>{mod.title}</h3>
-                    <p style={{ fontSize: '12px', color: 'var(--muted)', lineHeight: '1.6', marginBottom: '16px' }}>
+                  <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                    <h3 style={{ fontFamily: 'Syne', fontSize: '18px', marginBottom: '8px', minHeight: '44px' }}>{mod.title}</h3>
+                    <p style={{ fontSize: '12px', color: 'var(--muted)', lineHeight: '1.6', marginBottom: '16px', flex: 1 }}>
                       {mod.desc}
                     </p>
                     <button 
                       className="suggestion-chip" 
-                      style={{ width: '100%', justifyContent: 'center', background: 'var(--surface2)', fontWeight: '600' }}
+                      style={{ width: '100%', justifyContent: 'center', background: 'var(--surface2)', fontWeight: '600', marginTop: 'auto' }}
                       onClick={() => setActiveVideo(mod)}
                     >Watch &amp; Learn</button>
                   </div>

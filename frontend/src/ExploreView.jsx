@@ -87,7 +87,7 @@ export default function ExploreView({ onNavigate }) {
             position: 'fixed', inset: '0', zIndex: '9999', 
             background: 'rgba(0,0,0,0.95)', display: 'flex', 
             alignItems: 'center', justifyContent: 'center',
-            padding: '40px'
+            padding: '16px'
           }}
           onClick={() => setActiveVideo(null)}
         >
@@ -105,7 +105,7 @@ export default function ExploreView({ onNavigate }) {
               src="/assets/videos/nestfund_overview.mp4"
               autoPlay
               controls
-              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
             <button 
               onClick={() => setActiveVideo(null)}
@@ -129,10 +129,10 @@ export default function ExploreView({ onNavigate }) {
                 <span className="badge-dot" style={{ background: 'var(--teal)' }}></span>
                 AI Market Brief: <span style={{ color: 'white', marginLeft: '5px' }}>{marketInsight}</span>
               </div>
-              <h1 style={{ letterSpacing: '-2px', textShadow: '0 10px 40px rgba(0,0,0,0.4)', marginBottom: '24px' }}>
+              <h1 style={{ letterSpacing: '-2px', textShadow: '0 10px 40px rgba(0,0,0,0.4)', marginBottom: '16px' }}>
                 Explore the <span className="teal">Ecosystem.</span>
               </h1>
-              <p className="hero-sub" style={{ marginBottom: '32px', maxWidth: '700px', margin: '0 auto 40px', lineHeight: '1.8' }}>
+              <p className="hero-sub" style={{ marginBottom: '24px', maxWidth: '700px', margin: '0 auto 24px', lineHeight: '1.8' }}>
                 NestFund is an AI-powered investment platform built on the Stellar blockchain that bridges the gap between everyday investors and real funding opportunities. When a business submits a funding request, our AI analyzes the deal, assigns a risk rating, and deploys a dedicated Soroban smart contract. 
               </p>
               <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
@@ -162,7 +162,7 @@ export default function ExploreView({ onNavigate }) {
         <div className="grid-2-1">
           
           {/* Trends & Sector Performance */}
-          <div className="dashboard-card" style={{ padding: '32px' }}>
+          <div className="dashboard-card">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
               <h3 style={{ fontFamily: 'Syne', fontSize: '20px' }}>Sector Performance</h3>
               <div style={{ display: 'flex', gap: '10px' }}>
@@ -183,7 +183,7 @@ export default function ExploreView({ onNavigate }) {
               {trends.map((t, i) => (
                 <div key={i} className="asset-trending-row" style={{ 
                   display: 'grid', gridTemplateColumns: 'minmax(150px, 2fr) 1fr 1fr 1fr', 
-                  minWidth: '600px',
+                  minWidth: '700px',
                   padding: '20px 0', background: 'var(--surface)',
                   alignItems: 'center'
                 }}>
@@ -205,7 +205,7 @@ export default function ExploreView({ onNavigate }) {
           </div>
 
           {/* Stellar Live Ledger Feed */}
-          <div className="dashboard-card" style={{ padding: '32px', position: 'relative' }}>
+          <div className="dashboard-card" style={{ position: 'relative' }}>
              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '24px' }}>
                 <div className="ai-pulse" style={{ width: '6px', height: '6px' }}></div>
                 <h3 style={{ fontFamily: 'Syne', fontSize: '18px' }}>Stellar Ledger Live</h3>
@@ -313,7 +313,7 @@ export default function ExploreView({ onNavigate }) {
         <div 
           className="dashboard-card featured-footer-card" 
           style={{ 
-            marginTop: '80px', padding: '40px', 
+            marginTop: '80px',
             background: 'linear-gradient(135deg, var(--surface), var(--surface2))',
             display: 'flex', justifyContent: 'space-between', alignItems: 'center',
             gap: '24px', flexWrap: 'wrap'
