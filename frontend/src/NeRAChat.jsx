@@ -112,10 +112,15 @@ export default function NeRAChat({ embedded = false, onClose }) {
   };
 
   const renderText = (text) => {
+    if (!text) return '';
     // Simple markdown-ish rendering
     return text
+      .trim()
       .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\n/g, '<br/>');
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')
+      .replace(/(\r\n|\n|\r)/g, '<br/>')
+      .replace(/•\s?(.+?)(<br\/>|$)/g, '<div style="margin-left: 12px; display: flex; gap: 8px;"><span>•</span><span>$1</span></div>')
+      .replace(/(\d\.\s?)(.+?)(<br\/>|$)/g, '<div style="margin-left: 12px; display: flex; gap: 8px;"><span>$1</span><span>$2</span></div>');
   };
 
   return (

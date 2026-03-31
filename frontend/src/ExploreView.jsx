@@ -34,10 +34,16 @@ export default function ExploreView({ onNavigate }) {
         const sys = "You are the NestFund Alpha Engine. Review the current listings and return a SINGLE-SENTENCE professional market outlook (max 150 chars).";
         const body = `Listings: ${listings.map(l => l.name).join(', ')}. Volume: ₹${transactions.reduce((a,t)=>Number(a)+Number(t.amount || 0),0)}`;
         
+        const apiKey = import.meta.env.VITE_GROQ_API_KEY;
+        if (!apiKey || apiKey.includes('your_')) {
+          setMarketInsight('Secure Stellar Network node: Stable performance.');
+          return;
+        }
+
         const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`,
+            'Authorization': `Bearer ${apiKey}`,
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
@@ -46,9 +52,11 @@ export default function ExploreView({ onNavigate }) {
           })
         });
         const data = await res.json();
-        setMarketInsight(data.choices[0].message.content);
+        if (data.choices?.[0]?.message?.content) {
+          setMarketInsight(data.choices[0].message.content.replace(/^"|"$/g, ''));
+        }
       } catch (e) {
-        setMarketInsight('Standard liquidity stable across Stellar Testnet.');
+        setMarketInsight('Stellar Testnet: Liquidity stable across sectors.');
       }
     };
     generateInsight();

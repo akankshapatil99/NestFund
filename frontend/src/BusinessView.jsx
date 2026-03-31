@@ -261,10 +261,17 @@ export default function BusinessView() {
                     const sysPrompt = "You are the NestFund AI Risk Auditor. Analyze the funding request and return ONLY a valid JSON object with: 'score' (0-10), 'rating' (LOW, MEDIUM, HIGH), and 'summary' (max 120 chars).";
                     const userPrompt = `Company: ${form.company}, Type: ${form.assetType}, Amount: ₹${form.amount}, Business: ${form.description || 'Not provided'}`;
                     
+                    const apiKey = import.meta.env.VITE_GROQ_API_KEY;
+                    if (!apiKey || apiKey.includes('your_')) {
+                      setAiAnalysis({ score: '?', rating: 'ERROR', summary: 'Groq API Key missing or invalid. Check frontend/.env file.' });
+                      setIsAnalyzing(false);
+                      return;
+                    }
+                    
                     const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
                       method: 'POST',
                       headers: {
-                        'Authorization': `Bearer ${import.meta.env.VITE_GROQ_API_KEY}`,
+                        'Authorization': `Bearer ${apiKey}`,
                         'Content-Type': 'application/json'
                       },
                       body: JSON.stringify({
@@ -277,9 +284,18 @@ export default function BusinessView() {
                       })
                     });
                     const data = await res.json();
-                    setAiAnalysis(JSON.parse(data.choices[0].message.content));
+                    
+                    if (data.error) {
+                       throw new Error(data.error.message || 'Groq Error');
+                    }
+                    
+                    const content = data.choices?.[0]?.message?.content;
+                    if (!content) throw new Error('Empty AI response');
+                    
+                    setAiAnalysis(JSON.parse(content));
                   } catch (e) {
                     console.error('AI Analysis failed', e);
+                    setAiAnalysis({ score: '?', rating: 'ERROR', summary: `Analysis failed: ${e.message}. Ensure your API key is correctly set in .env.` });
                   }
                   setIsAnalyzing(false);
                 }}
