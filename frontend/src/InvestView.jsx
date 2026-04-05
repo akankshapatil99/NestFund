@@ -278,6 +278,14 @@ function InvestModal({ opp, onClose, walletAddress, onSuccess }) {
     setError(null);
 
     try {
+      // Prompt Freighter IMMEDIATELY to preserve the user's browser click sequence/gesture
+      if (walletType !== 'albedo') {
+        const access = await requestAccess();
+        if (access && access.error) {
+           throw new Error(`Freighter connection: ${access.error}`);
+        }
+      }
+
       setStatus('Fetching Account details from Stellar...');
       let account;
       try {
@@ -304,7 +312,7 @@ function InvestModal({ opp, onClose, walletAddress, onSuccess }) {
           amount: '0.01', 
         }))
         .addMemo(StellarSdk.Memo.text(`Invest ${opp.name.slice(0, 20)}`))
-        .setTimeout(30)
+        .setTimeout(300)
         .setNetworkPassphrase(StellarSdk.Networks.TESTNET)
         .build();
 
@@ -323,11 +331,8 @@ function InvestModal({ opp, onClose, walletAddress, onSuccess }) {
        } else {
         // FOR FREIGHTER: Extensions usually handle the async context better, so we proceed immediately.
         setStatus('Awaiting Sign-off (Freighter popup)...');
-        const access = await requestAccess();
-        if (access.error) throw new Error(`Freighter connection error: ${access.error}`);
         const signedResponse = await signTransaction(xdr, { 
-          networkPassphrase: StellarSdk.Networks.TESTNET,
-          network: 'TESTNET' 
+          networkPassphrase: StellarSdk.Networks.TESTNET
         });
         if (signedResponse.error) throw new Error(`Signing error: ${signedResponse.error}`);
         handleSubmitSignedTx(signedResponse.signedTxXdr);
@@ -408,7 +413,13 @@ function InvestModal({ opp, onClose, walletAddress, onSuccess }) {
        setStep('success');
      } catch (err) {
        console.error("Submission Error:", err);
-       setError(err.message || 'Transaction failed during submission.');
+       let errorMessage = 'Transaction failed during submission.';
+       if (err.response?.data?.extras) {
+         errorMessage = `Ledger rejected (400): ${JSON.stringify(err.response.data.extras.result_codes)}`;
+       } else if (err.message) {
+         errorMessage = err.message;
+       }
+       setError(errorMessage);
        setStep('input');
      }
    };
