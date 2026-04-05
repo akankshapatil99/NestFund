@@ -167,38 +167,6 @@ NeRA (NestFund Real-time Advisor) is integrated directly into 4 core flows:
 
 ---
 
-## MVP Requirements Status
-
-| Requirement | Status |
-|---|---|
-| Fully Functional DApp | Done |
-| Blockchain Integration | Done |
-| AI Real-time Advisor | Done |
-| Technical Documentation | Done |
-| Development History | Done |
-| Live Deployment | Done |
-
----
-
-## Development History
-
-This repository reflects a full development lifecycle with 10+ meaningful commits covering infrastructure setup, feature development, AI integration, blockchain wiring, and documentation.
-
-| # | Commit | Description |
-|---|---|---|
-| 1 | `Docs: Project setup` | Initial repository setup and project scaffolding |
-| 2 | `Deploy: Vercel config` | Added `vercel.json` for monorepo deployment |
-| 3 | `Chore: git ignores` | Configured `.gitignore` for frontend, backend, and contracts |
-| 4 | `Docs: Architecture diagram` | Initial `ARCHITECTURE.md` with system overview |
-| 5 | `Backend: Node init` | Express server bootstrap with CORS and env config |
-| 6 | `Backend: API setup` | Full REST API — users, listings, transactions endpoints |
-| 7 | `Frontend: Main App` | React SPA root with view routing and global state |
-| 8 | `Business: Listing flow` | Business listing submission form with validation |
-| 9 | `Invest: Dashboard` | Investor view with listing cards and XLM investment flow |
-| 10 | `AI: NeRA Advisor` | Groq-powered risk auditor and market intelligence integration |
-| 11 | `Final cleanup` | Code cleanup, env safety, and production readiness |
-
----
 
 ## Tech Stack
 
