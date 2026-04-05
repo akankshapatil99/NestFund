@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { setAllowed, getAddress, signTransaction } from '@stellar/freighter-api';
+import { requestAccess, getAddress, signTransaction } from '@stellar/freighter-api';
 import albedoLib from '@albedo-link/intent';
 import * as StellarSdk from 'stellar-sdk';
 
@@ -323,6 +323,8 @@ function InvestModal({ opp, onClose, walletAddress, onSuccess }) {
        } else {
         // FOR FREIGHTER: Extensions usually handle the async context better, so we proceed immediately.
         setStatus('Awaiting Sign-off (Freighter popup)...');
+        const access = await requestAccess();
+        if (access.error) throw new Error(`Freighter connection error: ${access.error}`);
         const signedResponse = await signTransaction(xdr, { 
           networkPassphrase: StellarSdk.Networks.TESTNET,
           network: 'TESTNET' 
