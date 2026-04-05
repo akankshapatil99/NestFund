@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { setAllowed, getAddress, isConnected } from '@stellar/freighter-api';
+import { requestAccess, getAddress, isConnected } from '@stellar/freighter-api';
 import albedoLib from '@albedo-link/intent';
 
 const albedo = albedoLib?.default || albedoLib;
@@ -38,8 +38,8 @@ export default function LoginView({ onLogin }) {
       const connected = await isConnected();
       if (!connected) throw new Error('Freighter not detected. If on mobile, please use Albedo below.');
       
-      const allowed = await setAllowed();
-      if (allowed.error) throw new Error(allowed.error);
+      const access = await requestAccess();
+      if (access.error) throw new Error(access.error);
       const result = await getAddress();
       const key = typeof result === 'string' ? result : result.address || result.publicKey;
       if (!key) throw new Error('Could not read wallet address.');
