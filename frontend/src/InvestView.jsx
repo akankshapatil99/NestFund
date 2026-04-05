@@ -331,8 +331,13 @@ function InvestModal({ opp, onClose, walletAddress, onSuccess }) {
        } else {
         // FOR FREIGHTER: Extensions usually handle the async context better, so we proceed immediately.
         setStatus('Awaiting Sign-off (Freighter popup)...');
+        const access = await requestAccess();
+        if (access && access.error) throw new Error(`Freighter connection error: ${access.error}`);
         const signedResponse = await signTransaction(xdr, { 
-          networkPassphrase: StellarSdk.Networks.TESTNET
+          network: 'TESTNET',
+          networkPassphrase: 'Test SDF Network ; September 2015',
+          network: 'TESTNET',
+          address: walletAddress
         });
         if (signedResponse.error) throw new Error(`Signing error: ${signedResponse.error}`);
         handleSubmitSignedTx(signedResponse.signedTxXdr);
