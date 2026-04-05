@@ -226,6 +226,11 @@ Access the real-time feedback response sheet here:
 **Feedback Snapshot:**
 ![User Feedback Response Sheet](./NF%20videos/supabase.png)
 
+### User Feedback Tracking
+| User Name | User Email | User Wallet Address | User Feedback | Commit ID |
+|---|---|---|---|---|
+| (Example User) | example@email.com | GABCDEFGHIJKLMNOPQRSTUVWXYZ... | "Requested feature..." | `a1b2c3d` |
+
 ---
 
 ## Contributing
