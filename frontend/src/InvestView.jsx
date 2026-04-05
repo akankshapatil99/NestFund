@@ -265,8 +265,9 @@ function InvestModal({ opp, onClose, walletAddress, onSuccess }) {
   const estimatedEarnings = ((Number(amount) * (parseFloat(opp.returnval) || 0)) / 100).toFixed(0);
 
   const handleInvest = async () => {
+    const walletType = localStorage.getItem('nestfund_wallet_type') || 'freighter';
+
     if (!walletAddress) {
-      const walletType = localStorage.getItem('nestfund_wallet_type') || 'freighter';
       setError(`Please connect your ${walletType === 'albedo' ? 'Albedo' : 'Freighter'} wallet first.`);
       return;
     }
@@ -316,7 +317,6 @@ function InvestModal({ opp, onClose, walletAddress, onSuccess }) {
         .setNetworkPassphrase(StellarSdk.Networks.TESTNET)
         .build();
 
-      const walletType = localStorage.getItem('nestfund_wallet_type') || 'freighter';
       const xdr = transaction.toXDR();
       
        if (walletType === 'albedo') {
