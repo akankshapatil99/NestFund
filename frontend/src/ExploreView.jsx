@@ -164,9 +164,6 @@ export default function ExploreView({ onNavigate }) {
                   style={{ display: 'inline-flex', alignItems: 'center', padding: '0 24px', borderRadius: '14px', background: 'transparent', border: '1px solid var(--border)', color: 'white', textDecoration: 'none' }}>
                   Whitepaper
                 </a>
-                <button className="btn-secondary" style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '0 24px', borderRadius: '14px', border: '1px solid rgba(129,140,248,0.3)', color: '#818cf8', background: 'rgba(129,140,248,0.05)' }} onClick={() => onNavigate('Invest')}>
-                  Start Investing
-                </button>
               </div>
             </motion.div>
           </div>
