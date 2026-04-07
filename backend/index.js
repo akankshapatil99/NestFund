@@ -42,6 +42,109 @@ app.get('/api/stats', async (req, res) => {
   }
 });
 
+// ─── METRICS DASHBOARD ──────────────────────────────────────────────────
+app.get('/api/metrics', async (req, res) => {
+  try {
+    const now = new Date();
+    const todayStart = new Date(now); todayStart.setHours(0,0,0,0);
+    const weekAgo = new Date(now); weekAgo.setDate(weekAgo.getDate() - 7);
+    const monthAgo = new Date(now); monthAgo.setDate(monthAgo.getDate() - 30);
+
+    // DAU — users who logged in today
+    const { count: dau } = await supabase
+      .from('users').select('*', { count: 'exact', head: true })
+      .gte('lastlogin', todayStart.toISOString());
+
+    // WAU — users active in last 7 days
+    const { count: wau } = await supabase
+      .from('users').select('*', { count: 'exact', head: true })
+      .gte('lastlogin', weekAgo.toISOString());
+
+    // Total users
+    const { count: totalUsers } = await supabase
+      .from('users').select('*', { count: 'exact', head: true });
+
+    // New users today
+    const { count: newUsersToday } = await supabase
+      .from('users').select('*', { count: 'exact', head: true })
+      .gte('joinedat', todayStart.toISOString());
+
+    // New users this week
+    const { count: newUsersWeek } = await supabase
+      .from('users').select('*', { count: 'exact', head: true })
+      .gte('joinedat', weekAgo.toISOString());
+
+    // All transactions for volume + count
+    const { data: allTxs } = await supabase
+      .from('transactions').select('amount, time, address, asset, type')
+      .order('time', { ascending: false });
+
+    const totalVolume = allTxs?.reduce((s, t) => s + (Number(t.amount) || 0), 0) || 0;
+
+    // Transactions today
+    const txsToday = allTxs?.filter(t => new Date(t.time) >= todayStart) || [];
+    const txsWeek  = allTxs?.filter(t => new Date(t.time) >= weekAgo) || [];
+
+    // User growth — last 7 days bucketed by day
+    const { data: recentUsers } = await supabase
+      .from('users').select('joinedat')
+      .gte('joinedat', weekAgo.toISOString());
+
+    const growthByDay = {};
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(now); d.setDate(d.getDate() - i);
+      const label = d.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric' });
+      growthByDay[label] = 0;
+    }
+    (recentUsers || []).forEach(u => {
+      const d = new Date(u.joinedat);
+      const label = d.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric' });
+      if (growthByDay[label] !== undefined) growthByDay[label]++;
+    });
+
+    // Tx volume — last 7 days bucketed by day
+    const txByDay = {};
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date(now); d.setDate(d.getDate() - i);
+      const label = d.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric' });
+      txByDay[label] = 0;
+    }
+    (txsWeek || []).forEach(t => {
+      const d = new Date(t.time);
+      const label = d.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric' });
+      if (txByDay[label] !== undefined) txByDay[label] += Number(t.amount) || 0;
+    });
+
+    // Retention rate = returning users (logins > joins) / total
+    const { data: returningData } = await supabase
+      .from('users').select('joinedat, lastlogin');
+    const returning = (returningData || []).filter(u => {
+      if (!u.joinedat || !u.lastlogin) return false;
+      return new Date(u.lastlogin) - new Date(u.joinedat) > 60 * 60 * 1000; // came back 1hr+ later
+    });
+    const retentionRate = totalUsers > 0 ? Math.round((returning.length / totalUsers) * 100) : 0;
+
+    res.json({
+      dau: dau || 0,
+      wau: wau || 0,
+      totalUsers: totalUsers || 0,
+      newUsersToday: newUsersToday || 0,
+      newUsersWeek: newUsersWeek || 0,
+      totalVolume,
+      txCountToday: txsToday.length,
+      txCountWeek: txsWeek.length,
+      txCountTotal: allTxs?.length || 0,
+      retentionRate,
+      growthByDay,
+      txByDay,
+      recentTxs: (allTxs || []).slice(0, 8)
+    });
+  } catch (e) {
+    console.error('[Metrics Error]', e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
 // ─── USERS LIST ─────────────────────────────────────────────────────────
 app.get('/api/users', async (req, res) => {
   const { data, error } = await supabase

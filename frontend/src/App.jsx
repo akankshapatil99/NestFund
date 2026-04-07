@@ -8,6 +8,7 @@ import ExploreView from './ExploreView.jsx';
 import BetaView from './BetaView.jsx';
 import LoginView from './LoginView.jsx';
 import NeRAChat from './NeRAChat.jsx';
+import MetricsView from './MetricsView.jsx';
 import { motion, AnimatePresence } from 'framer-motion';
 
 function App() {
@@ -213,6 +214,7 @@ function App() {
       <button className={`mode-btn ${activeMode === "Invest" ? "active" : ""}`} onClick={() => setActiveMode("Invest")}>Invest</button>
       <button className={`mode-btn ${activeMode === "Business" ? "active" : ""}`} onClick={() => setActiveMode("Business")}>Business</button>
       <button className={`mode-btn ${activeMode === "Beta" ? "active" : ""}`} onClick={() => setActiveMode("Beta")} style={{ color: activeMode === 'Beta' ? '#000' : 'var(--teal)' }}>Beta</button>
+      <button className={`mode-btn ${activeMode === "Metrics" ? "active" : ""}`} onClick={() => setActiveMode("Metrics")} style={{ color: activeMode === 'Metrics' ? '#000' : '#818cf8' }}>📊 Metrics</button>
     </div>
 
     <div className="nav-cta">
@@ -243,6 +245,7 @@ function App() {
         {activeMode === 'Invest' && <InvestView portfolioVal={portfolioVal} c1={c1} c2={c2} c3={c3} c4={c4} walletAddress={walletAddress} />}
         {activeMode === 'Business' && <BusinessView walletAddress={walletAddress} />}
         {activeMode === 'Beta' && <BetaView walletAddress={walletAddress} />}
+        {activeMode === 'Metrics' && <MetricsView />}
       </motion.div>
     </AnimatePresence>
   </main>
