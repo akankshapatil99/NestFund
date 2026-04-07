@@ -414,6 +414,16 @@ function InvestModal({ opp, onClose, walletAddress, onSuccess }) {
        localStorage.removeItem('nf_pending_xdr');
        window.__pendingAlbedoXdr = null;
 
+       // Track Transaction with PostHog
+       import('posthog-js').then(({ default: posthog }) => {
+           posthog.capture('transaction_completed', {
+               amount: Number(amount),
+               asset: opp.name,
+               type: opp.type,
+               transaction_hash: txHash
+           });
+       });
+
        onSuccess(tx);
        setStep('success');
      } catch (err) {

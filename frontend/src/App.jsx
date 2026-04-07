@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
+import { usePostHog } from 'posthog-js/react';
 import './index.css';
 import LearnView from './LearnView.jsx';
 import InvestView from './InvestView.jsx';
@@ -10,6 +11,7 @@ import NeRAChat from './NeRAChat.jsx';
 import { motion, AnimatePresence } from 'framer-motion';
 
 function App() {
+  const posthog = usePostHog();
   const [activeMode, setActiveMode] = useState('Explore');
   const [neraOpen, setNeraOpen] = useState(false);
   const cursorRef = useRef(null);
@@ -23,15 +25,29 @@ function App() {
   useEffect(() => {
     if (loggedInAddress) {
       setWalletAddress(loggedInAddress);
-      setUserName(localStorage.getItem('nestfund_name') || '');
+      const name = localStorage.getItem('nestfund_name') || '';
+      setUserName(name);
+      
+      // Identify user for PostHog DAU and Retention
+      if (posthog) {
+        posthog.identify(loggedInAddress, {
+          name: name,
+        });
+      }
     }
-  }, [loggedInAddress]);
+  }, [loggedInAddress, posthog]);
 
   // Called by LoginView on successful registration/login
   const handleLogin = (address) => {
     setLoggedInAddress(address);
     setWalletAddress(address);
     setUserName(localStorage.getItem('nestfund_name') || '');
+    if (posthog) {
+      posthog.identify(address, {
+        name: localStorage.getItem('nestfund_name') || '',
+      });
+      posthog.capture('user_login');
+    }
   };
 
   const handleLogout = () => {
@@ -41,6 +57,10 @@ function App() {
     setLoggedInAddress(null);
     setWalletAddress(null);
     setUserName('');
+    if (posthog) {
+      posthog.capture('user_logout');
+      posthog.reset();
+    }
   };
 
   // Live stats from backend (no hardcoding)

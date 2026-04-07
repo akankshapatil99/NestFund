@@ -108,6 +108,7 @@ cd NestFund
 ```env
 VITE_BACKEND_URL=http://localhost:5001
 VITE_GROQ_API_KEY=your_groq_api_key_here
+VITE_POSTHOG_KEY=your_posthog_project_key  # Optional: For DAU, Analytics & Retention tracking
 ```
 
 **`backend/.env`**
