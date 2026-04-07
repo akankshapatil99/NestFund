@@ -214,7 +214,7 @@ function App() {
       <button className={`mode-btn ${activeMode === "Invest" ? "active" : ""}`} onClick={() => setActiveMode("Invest")}>Invest</button>
       <button className={`mode-btn ${activeMode === "Business" ? "active" : ""}`} onClick={() => setActiveMode("Business")}>Business</button>
       <button className={`mode-btn ${activeMode === "Beta" ? "active" : ""}`} onClick={() => setActiveMode("Beta")} style={{ color: activeMode === 'Beta' ? '#000' : 'var(--teal)' }}>Beta</button>
-      <button className={`mode-btn ${activeMode === "Metrics" ? "active" : ""}`} onClick={() => setActiveMode("Metrics")} style={{ color: activeMode === 'Metrics' ? '#000' : '#818cf8' }}>📊 Metrics</button>
+      <button className={`mode-btn ${activeMode === "Metrics" ? "active" : ""}`} onClick={() => setActiveMode("Metrics")} style={{ color: activeMode === 'Metrics' ? '#000' : '#818cf8' }}>Metrics</button>
     </div>
 
     <div className="nav-cta">
