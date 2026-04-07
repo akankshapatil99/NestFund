@@ -202,6 +202,23 @@ Access the real-time feedback response sheet here:
 
 ---
 
+---
+
+## User Metrics & Analytics
+
+NestFund integrates **PostHog** for real-time product analytics, tracking:
+
+| Metric | Description |
+|---|---|
+| **DAU (Daily Active Users)** | Unique wallets active each day via `posthog.identify()` on login |
+| **Transactions** | Every on-chain investment fires a `transaction_completed` event with amount, asset & tx hash |
+| **Retention** | Wallet-based cohort retention — tracks if users return day 1, day 7, day 30 |
+
+### Live DAU Dashboard (PostHog)
+![NestFund DAU Tracking — PostHog Dashboard](./NF%20videos/DAU.png)
+
+---
+
 ## Contributing
 
 Contributions are welcome! Please open an issue first to discuss what you'd like to change.
