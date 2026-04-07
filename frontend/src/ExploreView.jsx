@@ -205,29 +205,41 @@ export default function ExploreView({ onNavigate }) {
             {trends.length === 0 ? (
               <div style={{ color: 'var(--muted)', textAlign: 'center', padding: '40px', fontSize: '14px' }}>No listings available yet.</div>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', background: 'var(--border)', overflowX: 'auto', borderRadius: '12px', overflow: 'hidden' }}>
-                {trends.map((t, i) => (
-                  <div key={i} style={{ display: 'grid', gridTemplateColumns: 'minmax(160px,2fr) 80px 70px 90px', minWidth: '500px', padding: '16px 20px', background: 'var(--surface)', alignItems: 'center', transition: 'background 0.2s' }}
-                    onMouseEnter={e => e.currentTarget.style.background = 'var(--surface2)'}
-                    onMouseLeave={e => e.currentTarget.style.background = 'var(--surface)'}
-                  >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                      <div style={{ width: '36px', height: '36px', background: 'rgba(200,169,110,0.08)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gold)', flexShrink: 0 }}>
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              <div style={{ borderRadius: '12px', border: '1px solid var(--border)', overflow: 'hidden' }}>
+                {/* Column headers */}
+                <div style={{ display: 'grid', gridTemplateColumns: '2fr 90px 70px 100px', padding: '10px 20px', background: 'rgba(255,255,255,0.02)', borderBottom: '1px solid var(--border)' }}>
+                  <div style={{ fontSize: '10px', color: 'var(--muted)', fontFamily: 'JetBrains Mono', letterSpacing: '0.06em' }}>PROJECT</div>
+                  <div style={{ fontSize: '10px', color: 'var(--muted)', fontFamily: 'JetBrains Mono', letterSpacing: '0.06em' }}>YIELD</div>
+                  <div style={{ fontSize: '10px', color: 'var(--muted)', fontFamily: 'JetBrains Mono', letterSpacing: '0.06em' }}>7D</div>
+                  <div style={{ fontSize: '10px', color: 'var(--muted)', fontFamily: 'JetBrains Mono', letterSpacing: '0.06em', textAlign: 'right' }}>REMAINING</div>
+                </div>
+                <div style={{ overflowX: 'auto' }}>
+                  {trends.map((t, i) => (
+                    <div key={i}
+                      style={{ display: 'grid', gridTemplateColumns: '2fr 90px 70px 100px', minWidth: '420px', padding: '14px 20px', background: 'var(--surface)', alignItems: 'center', transition: 'background 0.2s', borderBottom: i < trends.length - 1 ? '1px solid var(--border)' : 'none' }}
+                      onMouseEnter={e => e.currentTarget.style.background = 'var(--surface2)'}
+                      onMouseLeave={e => e.currentTarget.style.background = 'var(--surface)'}
+                    >
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        <div style={{ width: '34px', height: '34px', background: 'rgba(200,169,110,0.08)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--gold)', flexShrink: 0 }}>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                        </div>
+                        <div style={{ minWidth: 0 }}>
+                          <div style={{ fontWeight: '600', fontSize: '14px', marginBottom: '2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{t.name}</div>
+                          <div style={{ fontSize: '11px', color: 'var(--muted)' }}>{t.sector}</div>
+                        </div>
                       </div>
-                      <div>
-                        <div style={{ fontWeight: '600', fontSize: '14px', marginBottom: '2px' }}>{t.name}</div>
-                        <div style={{ fontSize: '11px', color: 'var(--muted)' }}>{t.sector}</div>
+                      <div style={{ fontFamily: 'Syne', fontWeight: '700', fontSize: '14px' }}>
+                        {t.yield} <span style={{ fontSize: '10px', color: 'var(--muted)', fontWeight: 400 }}>APY</span>
+                      </div>
+                      <div style={{ color: 'var(--green)', fontSize: '13px', fontWeight: '600' }}>{t.trend}</div>
+                      <div style={{ textAlign: 'right' }}>
+                        <div style={{ fontSize: '13px', color: 'var(--text)' }}>{t.vol}</div>
+                        <div style={{ fontSize: '10px', color: 'var(--muted)' }}>Remaining</div>
                       </div>
                     </div>
-                    <div style={{ fontFamily: 'Syne', fontWeight: '700', fontSize: '15px' }}>{t.yield} <span style={{ fontSize: '10px', color: 'var(--muted)', fontWeight: 400 }}>APY</span></div>
-                    <div style={{ color: 'var(--green)', fontSize: '13px', fontWeight: '600' }}>{t.trend}</div>
-                    <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontSize: '13px', color: 'var(--text)' }}>{t.vol}</div>
-                      <div style={{ fontSize: '10px', color: 'var(--muted)' }}>Remaining</div>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             )}
 
