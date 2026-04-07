@@ -279,49 +279,55 @@ function InvestModal({ opp, onClose, walletAddress, onSuccess }) {
     setError(null);
 
     try {
-      // Prompt Freighter IMMEDIATELY to preserve the user's browser click sequence/gesture
+      let activeAddress = walletAddress;
+
       if (walletType !== 'albedo') {
+        // Request access first
         const access = await requestAccess();
         if (access && access.error) {
-           throw new Error(`Freighter connection: ${access.error}`);
+          throw new Error(`Freighter connection: ${access.error}`);
+        }
+        // *** KEY FIX: Always get the LIVE address from Freighter right now ***
+        // The stored walletAddress (from localStorage session) may differ from
+        // what Freighter currently has active → causes tx_bad_auth
+        const addrResponse = await getAddress();
+        if (addrResponse && addrResponse.address) {
+          activeAddress = addrResponse.address;
         }
       }
 
       setStatus('Fetching Account details from Stellar...');
       let account;
       try {
-        account = await server.loadAccount(walletAddress);
+        account = await server.loadAccount(activeAddress);
       } catch (err) {
         if (err.response?.status === 404) {
           setStatus('Provisioning testnet XLM via Friendbot...');
-          await fetch(`https://friendbot.stellar.org/?addr=${walletAddress}`);
+          await fetch(`https://friendbot.stellar.org/?addr=${activeAddress}`);
           await new Promise(r => setTimeout(r, 4500));
-          account = await server.loadAccount(walletAddress);
+          account = await server.loadAccount(activeAddress);
         } else throw err;
       }
 
       setStatus(`${opp.name}: Preparing on-chain settlement...`);
       
-      // Building a real payment transaction as a "Fractional Investment Hold"
+      // Build transaction using the LIVE active address as both source and destination
       const transaction = new StellarSdk.TransactionBuilder(account, {
         fee: '100', 
         networkPassphrase: StellarSdk.Networks.TESTNET,
       })
         .addOperation(StellarSdk.Operation.payment({
-          destination: walletAddress,
+          destination: activeAddress,
           asset: StellarSdk.Asset.native(),
           amount: '0.01', 
         }))
         .addMemo(StellarSdk.Memo.text(`Invest ${opp.name.slice(0, 20)}`))
         .setTimeout(300)
-        .setNetworkPassphrase(StellarSdk.Networks.TESTNET)
         .build();
 
       const xdr = transaction.toXDR();
       
        if (walletType === 'albedo') {
-         // FOR ALBEDO: We MUST call the intent directly from a user click to avoid popup blockers on mobile.
-         // We save the XDR and wait for the user to click the new "SIGN NOW" button.
          localStorage.setItem('nf_pending_opp', JSON.stringify(opp));
          localStorage.setItem('nf_pending_amount', amount.toString());
          localStorage.setItem('nf_pending_xdr', xdr);
@@ -329,7 +335,6 @@ function InvestModal({ opp, onClose, walletAddress, onSuccess }) {
          setStep('prepared');
          setStatus('Investment Prepared');
        } else {
-        // FOR FREIGHTER: Extensions usually handle the async context better, so we proceed immediately.
         setStatus('Awaiting Sign-off (Freighter popup)...');
         const signedResponse = await signTransaction(xdr, { 
           networkPassphrase: StellarSdk.Networks.TESTNET,
