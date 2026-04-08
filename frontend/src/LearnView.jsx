@@ -5,6 +5,30 @@ import { motion } from 'framer-motion';
 export default function LearnView({ portfolioVal }) {
   const [virtualBalance] = useState((10000 + portfolioVal * 0.05).toFixed(2));
   const [activeVideo, setActiveVideo] = useState(null);
+  const [activeConcept, setActiveConcept] = useState(null);
+
+  const conceptDocs = {
+    'Invoice Financing 101': {
+      title: 'Invoice Financing 101',
+      text: 'Invoice financing allows B2B companies to borrow against their unpaid invoices. Instead of waiting 30-90 days for client payments, they receive immediate liquidity. Investors fund these invoices and earn a fixed yield upon successful repayment, creating a low-risk, asset-backed investment cycle.'
+    },
+    'Soroban Contract Security': {
+      title: 'Soroban Contract Security',
+      text: 'Soroban is Stellar’s Turing-complete smart contract platform. It emphasizes security through deterministic execution, strict resource metered bounds, and a lack of unbounded loops. This architectural design inherently eliminates many common smart contract vulnerabilities like deep reentrancy attacks.'
+    },
+    'AI Risk Score Logic': {
+      title: 'AI Risk Score Logic',
+      text: 'The NeRA AI models evaluate incoming assets using over 50 distinct data points—including historical repayment rates, current market volatility, and on-chain liquidity checks. It outputs a real-time risk score (Low, Medium, High risk) to help you make informed fractional investments.'
+    },
+    'Asset Fractionalization': {
+      title: 'Asset Fractionalization',
+      text: 'By locking high-value assets securely via smart contracts, they can be programmatically divided into thousands of affordable $10 tokens. This democratizes access to institutional-grade investments, allowing retail investors to easily diversify their portfolios.'
+    },
+    'Stellar Network Efficiency': {
+      title: 'Stellar Network Efficiency',
+      text: 'Powered by the Stellar Consensus Protocol (SCP), transactions settle in an average of 3 to 5 seconds. Unlike other networks, Stellar operates with extremely low gas fees (fractions of a cent), making micro-investing and fractional payouts economically viable.'
+    }
+  };
 
   const modules = [
     {
@@ -118,6 +142,52 @@ export default function LearnView({ portfolioVal }) {
         </div>
       )}
 
+      {/* CONCEPT DOCS MODAL */}
+      {activeConcept && (
+        <div 
+          className="nera-video-overlay" 
+          style={{ 
+            position: 'fixed', inset: '0', zIndex: '10000', 
+            background: 'rgba(0,0,0,0.85)', display: 'flex', 
+            alignItems: 'center', justifyContent: 'center',
+            padding: '20px', backdropFilter: 'blur(10px)'
+          }}
+          onClick={() => setActiveConcept(null)}
+        >
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ type: 'spring', damping: 20, stiffness: 300 }}
+            className="concept-modal-content" 
+            style={{ 
+              width: '100%', maxWidth: '600px', 
+              background: '#111', borderRadius: '20px', position: 'relative',
+              overflow: 'hidden', border: '1px solid var(--border)',
+              boxShadow: '0 20px 60px rgba(0,0,0,0.6)', padding: '32px'
+            }}
+            onClick={e => e.stopPropagation()}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
+               <div style={{ padding: '8px', background: 'rgba(200,169,110,0.1)', borderRadius: '8px', color: 'var(--gold)' }}>
+                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+               </div>
+               <h2 style={{ fontFamily: 'Syne', fontSize: '24px', margin: 0, color: 'var(--text)' }}>
+                 {conceptDocs[activeConcept].title}
+               </h2>
+            </div>
+            
+            <p style={{ fontSize: '15px', color: 'var(--muted)', lineHeight: '1.7', margin: 0 }}>
+              {conceptDocs[activeConcept].text}
+            </p>
+
+            <button 
+              onClick={() => setActiveConcept(null)}
+              style={{ position: 'absolute', top: '24px', right: '24px', background: 'rgba(255,255,255,0.05)', border: 'none', color: 'var(--muted)', width: '32px', height: '32px', borderRadius: '50%', cursor: 'pointer', zIndex: '20', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            >✕</button>
+          </motion.div>
+        </div>
+      )}
+
       {/* HERO — AI IS THE STAR */}
       <section style={{ paddingBottom: '60px' }}>
         <div className="container-responsive">
@@ -217,7 +287,12 @@ export default function LearnView({ portfolioVal }) {
                 'Asset Fractionalization',
                 'Stellar Network Efficiency',
               ].map(topic => (
-                <div key={topic} className="suggestion-chip" style={{ cursor: 'default' }}>
+                <div 
+                  key={topic} 
+                  className="suggestion-chip" 
+                  style={{ cursor: 'pointer', transition: 'all 0.2s', ':hover': { borderColor: 'var(--gold)', color: 'var(--gold)' } }}
+                  onClick={() => setActiveConcept(topic)}
+                >
                   {topic}
                 </div>
               ))}
