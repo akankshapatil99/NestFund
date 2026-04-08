@@ -5,7 +5,6 @@ import LearnView from './LearnView.jsx';
 import InvestView from './InvestView.jsx';
 import BusinessView from './BusinessView.jsx';
 import ExploreView from './ExploreView.jsx';
-import BetaView from './BetaView.jsx';
 import LoginView from './LoginView.jsx';
 import NeRAChat from './NeRAChat.jsx';
 import MetricsView from './MetricsView.jsx';
@@ -213,7 +212,6 @@ function App() {
       <button className={`mode-btn ${activeMode === "Learn" ? "active" : ""}`} onClick={() => setActiveMode("Learn")}>Learn</button>
       <button className={`mode-btn ${activeMode === "Invest" ? "active" : ""}`} onClick={() => setActiveMode("Invest")}>Invest</button>
       <button className={`mode-btn ${activeMode === "Business" ? "active" : ""}`} onClick={() => setActiveMode("Business")}>Business</button>
-      <button className={`mode-btn ${activeMode === "Beta" ? "active" : ""}`} onClick={() => setActiveMode("Beta")} style={{ color: activeMode === 'Beta' ? '#000' : 'var(--teal)' }}>Beta</button>
       <button className={`mode-btn ${activeMode === "Metrics" ? "active" : ""}`} onClick={() => setActiveMode("Metrics")} style={{ color: activeMode === 'Metrics' ? '#000' : '#818cf8' }}>Metrics</button>
     </div>
 
@@ -244,7 +242,6 @@ function App() {
         {activeMode === 'Learn' && <LearnView portfolioVal={portfolioVal} />}
         {activeMode === 'Invest' && <InvestView portfolioVal={portfolioVal} c1={c1} c2={c2} c3={c3} c4={c4} walletAddress={walletAddress} />}
         {activeMode === 'Business' && <BusinessView walletAddress={walletAddress} />}
-        {activeMode === 'Beta' && <BetaView walletAddress={walletAddress} />}
         {activeMode === 'Metrics' && <MetricsView />}
       </motion.div>
     </AnimatePresence>
@@ -258,7 +255,6 @@ function App() {
     </div>
     <div className="footer-right">
       <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '8px' }}>
-        <a href="#" className="suggestion-chip" style={{ textDecoration: 'none', background: 'var(--teal-dim)', border: '1px solid var(--teal)', color: 'var(--teal)', fontSize: '10px' }}>Beta: Give Feedback</a>
         <div className="stellar-badge" style={{ margin: 0 }}>Powered by Stellar · Soroban</div>
       </div>
       <div>© 2026 NestFund · All rights reserved</div>
