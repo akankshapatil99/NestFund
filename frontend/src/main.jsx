@@ -10,7 +10,7 @@ import * as Sentry from "@sentry/react";
 
 // Sentry Error Monitoring & Logging
 Sentry.init({
-  dsn: import.meta.env.VITE_SENTRY_DSN || "https://dummy@o0.ingest.sentry.io/0",
+  dsn: import.meta.env.VITE_SENTRY_DSN || "https://8abca21686269d62b8a2d91a516bd7b0@o4511186323046400.ingest.us.sentry.io/4511186326192128",
   integrations: [
     Sentry.browserTracingIntegration(),
     Sentry.replayIntegration({
