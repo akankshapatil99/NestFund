@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
+import morgan from 'morgan';
 
 dotenv.config();
 
@@ -21,6 +22,18 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 app.use(cors());
 app.use(express.json());
+
+// ─── PRODUCTION MONITORING & LOGGING ────────────────────────────────────
+// Use 'combined' format for detailed Apache-style logs in production
+app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
+
+// Custom error logging middleware
+const errorLogger = (err, req, res, next) => {
+  console.error(`[ERROR] ${new Date().toISOString()} - ${req.method} ${req.url}`);
+  console.error(err.stack);
+  next(err);
+};
+app.use(errorLogger);
 
 // ─── STATS ─────────────────────────────────────────────────────────────
 app.get('/api/stats', async (req, res) => {
