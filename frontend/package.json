@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@albedo-link/intent": "^0.13.0",
+    "@sentry/react": "^10.47.0",
+    "@sentry/tracing": "^7.120.4",
     "@stellar/freighter-api": "^6.0.1",
     "buffer": "^6.0.3",
     "framer-motion": "^12.38.0",

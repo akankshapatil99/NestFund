@@ -1,3 +1,5 @@
+import * as Sentry from '@sentry/node';
+import { nodeProfilingIntegration } from '@sentry/profiling-node';
 import express from 'express';
 import cors from 'cors';
 import { createClient } from '@supabase/supabase-js';
@@ -5,6 +7,16 @@ import dotenv from 'dotenv';
 import morgan from 'morgan';
 
 dotenv.config();
+
+// Sentry Error Monitoring & Logging for Backend
+Sentry.init({
+  dsn: process.env.SENTRY_DSN || "https://dummy@o0.ingest.sentry.io/0",
+  integrations: [
+    nodeProfilingIntegration(),
+  ],
+  tracesSampleRate: 1.0, 
+  profilesSampleRate: 1.0,
+});
 
 const app = express();
 const PORT = 5001;
@@ -34,6 +46,7 @@ const errorLogger = (err, req, res, next) => {
   next(err);
 };
 app.use(errorLogger);
+Sentry.setupExpressErrorHandler(app);
 
 // ─── STATS ─────────────────────────────────────────────────────────────
 app.get('/api/stats', async (req, res) => {
