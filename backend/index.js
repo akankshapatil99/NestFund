@@ -4,7 +4,9 @@ import express from 'express';
 import cors from 'cors';
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
+import StellarSdk from 'stellar-sdk';
 import morgan from 'morgan';
+import { syncBlockchainData } from './indexer.js';
 
 dotenv.config();
 
@@ -46,7 +48,7 @@ const errorLogger = (err, req, res, next) => {
   next(err);
 };
 app.use(errorLogger);
-Sentry.setupExpressErrorHandler(app);
+// Sentry is initialized at the top
 
 // ─── STATS ─────────────────────────────────────────────────────────────
 app.get('/api/stats', async (req, res) => {
@@ -64,6 +66,7 @@ app.get('/api/stats', async (req, res) => {
       listingCount: listingCount || 0
     });
   } catch (e) {
+    Sentry.captureException(e, { extra: { context: 'api_stats' } });
     res.status(500).json({ error: e.message });
   }
 });
@@ -167,7 +170,19 @@ app.get('/api/metrics', async (req, res) => {
     });
   } catch (e) {
     console.error('[Metrics Error]', e);
+    Sentry.captureException(e, { extra: { context: 'api_metrics' } });
     res.status(500).json({ error: e.message });
+  }
+});
+
+// ─── DATA INDEXING ──────────────────────────────────────────────────────
+app.post('/api/index', async (req, res) => {
+  try {
+    await syncBlockchainData();
+    res.json({ success: true, message: 'Blockchain sync completed successfully.' });
+  } catch (e) {
+    Sentry.captureException(e, { extra: { context: 'api_index_trigger' } });
+    res.status(500).json({ error: 'Indexer failed: ' + e.message });
   }
 });
 
@@ -196,6 +211,7 @@ app.post('/api/login', async (req, res) => {
 
   if (error) {
     console.error("Supabase Select Error:", error);
+    Sentry.captureException(error, { extra: { context: 'api_login_select', address } });
     return res.status(500).json({ error: error.message });
   }
 
@@ -216,6 +232,7 @@ app.post('/api/login', async (req, res) => {
     
     if (insertError) {
       console.error("Supabase Insert Error:", insertError);
+      Sentry.captureException(insertError, { extra: { context: 'api_login_insert', newUser } });
       return res.status(500).json({ error: insertError.message });
     }
     return res.json({ success: true, user: data, isNew: true });
@@ -234,6 +251,7 @@ app.post('/api/login', async (req, res) => {
 
     if (updateError) {
       console.error("Supabase Update Error:", updateError);
+      Sentry.captureException(updateError, { extra: { context: 'api_login_update', updateData, address } });
       return res.status(500).json({ error: updateError.message });
     }
     return res.json({ success: true, user: data, isNew: false });
@@ -283,6 +301,7 @@ app.post('/api/transactions', async (req, res) => {
 
   if (txError) {
     console.error("Transaction Creation Error:", txError);
+    Sentry.captureException(txError, { extra: { context: 'api_post_transaction', newTx } });
     return res.status(500).json({ error: txError.message });
   }
 
@@ -378,6 +397,7 @@ app.post('/api/ai/chat', async (req, res) => {
     res.json(data);
   } catch (e) {
     console.error('[AI Proxy Error]', e.message);
+    Sentry.captureException(e, { extra: { context: 'api_ai_chat', model } });
     res.status(500).json({ 
       error: { 
         message: 'AI Proxy Error: ' + e.message,
@@ -387,12 +407,53 @@ app.post('/api/ai/chat', async (req, res) => {
   }
 });
 
+// ─── FEE SPONSORSHIP (GASLESS TRANSACTIONS) ──────────────────────────────
+app.post('/api/sponsor', async (req, res) => {
+  const { xdr } = req.body;
+  const sponsorSecret = process.env.NESTFUND_ADMIN_SECRET;
+
+  if (!sponsorSecret) {
+    return res.status(500).json({ error: 'Sponsor identity not configured on server.' });
+  }
+
+  try {
+    const sponsorKeypair = StellarSdk.Keypair.fromSecret(sponsorSecret);
+    
+    // 1. Decode the user's transaction (Inner)
+    const userTx = StellarSdk.TransactionBuilder.fromXDR(xdr, StellarSdk.Networks.TESTNET);
+    
+    // 2. Wrap it in a Fee Bump transaction
+    const feeBumpTx = StellarSdk.TransactionBuilder.buildFeeBumpTransaction(
+      sponsorKeypair,
+      '500', // Sponsored Fee (enough to prioritize)
+      userTx,
+      StellarSdk.Networks.TESTNET
+    );
+
+    // 3. Sign as the Sponsor
+    feeBumpTx.sign(sponsorKeypair);
+
+    res.json({ 
+      success: true, 
+      sponsoredXdr: feeBumpTx.toXDR(),
+      sponsor: sponsorKeypair.publicKey()
+    });
+  } catch (e) {
+    console.error('[Sponsorship Error]', e.message);
+    Sentry.captureException(e, { extra: { context: 'api_sponsor' } });
+    res.status(500).json({ error: 'Fee sponsorship failed: ' + e.message });
+  }
+});
+
 if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => {
     console.log(`🚀 NestFund Backend: Now Connected to Supabase`);
     console.log(`Backend running at http://localhost:${PORT}`);
   });
 }
+
+// Sentry error handler must be after all controllers but before any other error middleware
+Sentry.setupExpressErrorHandler(app);
 
 // Export for Vercel Serverless Functions
 export default app;

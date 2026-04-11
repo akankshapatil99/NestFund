@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import * as Sentry from '@sentry/react';
 import { requestAccess, getAddress, isConnected } from '@stellar/freighter-api';
 import albedoLib from '@albedo-link/intent';
 
@@ -50,6 +51,7 @@ export default function LoginView({ onLogin }) {
       localStorage.setItem('nf_temp_type', 'freighter');
     } catch (err) {
       setServerError('Freighter error: ' + err.message);
+      Sentry.captureException(err, { extra: { context: 'handleConnectFreighter' } });
     } finally {
       setIsConnecting(false);
     }
@@ -81,6 +83,7 @@ export default function LoginView({ onLogin }) {
       }
     } catch (err) {
       console.error('Albedo Error:', err);
+      Sentry.captureException(err, { extra: { context: 'handleConnectAlbedo' } });
       setServerError('Albedo error: ' + (err.message || 'Verification failed.'));
     } finally {
       setIsConnecting(false);
@@ -134,6 +137,7 @@ export default function LoginView({ onLogin }) {
     } catch (err) {
       let msg = err.message;
       setServerError(msg);
+      Sentry.captureException(err, { extra: { context: 'handleSubmit_Login', name, email, freighterAddress } });
       setStep('form');
     }
   };

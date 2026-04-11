@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import * as Sentry from '@sentry/react';
 
 const API_URL = '/api/ai/chat';
 const MODEL_NAME = 'llama-3.3-70b-versatile'; // Standard high-availability model
@@ -50,7 +51,10 @@ export default function NeRAChat({ embedded = false, onClose }) {
     console.log("[NeRA AI] Initializing AI system — calling backend proxy...");
     fetch('/api/stats')
       .then(res => res.ok ? console.log("[NeRA AI] Backend connected ✅") : console.error("[NeRA AI] Backend connection status:", res.status))
-      .catch(e => console.error("[NeRA AI] Backend unreachable ❌", e.message));
+      .catch(e => {
+        console.error("[NeRA AI] Backend unreachable ❌", e.message);
+        Sentry.captureException(e, { extra: { context: 'NeRA Diagnostic Check' } });
+      });
   }, []);
 
   useEffect(() => {
@@ -99,6 +103,7 @@ export default function NeRAChat({ embedded = false, onClose }) {
       setMessages(prev => [...prev, { role: 'assistant', content: reply || "I'm sorry, I couldn't reach my brain." }]);
     } catch (err) {
       console.error('[Groq Error]', err);
+      Sentry.captureException(err, { extra: { context: 'NeRA sendMessage', userText } });
       setMessages(prev => [...prev, {
         role: 'assistant',
         content: `Connection Error: ${err.message}. Please check your connection.`,

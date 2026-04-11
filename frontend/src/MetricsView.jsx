@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import * as Sentry from '@sentry/react';
 
 const API = '';
 
@@ -115,7 +116,10 @@ export default function MetricsView() {
         setLastUpdated(new Date());
         setLoading(false);
       })
-      .catch(() => setLoading(false));
+      .catch(err => {
+        Sentry.captureException(err, { extra: { context: 'fetchMetrics' } });
+        setLoading(false);
+      });
   };
 
   useEffect(() => {

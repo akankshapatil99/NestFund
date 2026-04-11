@@ -34,8 +34,10 @@ posthog.init(posthogKey, {
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <PostHogProvider client={posthog}>
-      <App />
-    </PostHogProvider>
+    <Sentry.ErrorBoundary fallback={<div style={{padding: '50px', textAlign: 'center', color: '#fff'}}><h2>Something went wrong.</h2><p>Our team has been notified. Please refresh the page.</p></div>}>
+      <PostHogProvider client={posthog}>
+        <App />
+      </PostHogProvider>
+    </Sentry.ErrorBoundary>
   </StrictMode>,
 )

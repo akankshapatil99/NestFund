@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import * as Sentry from '@sentry/react';
 
 export default function ExploreView({ onNavigate }) {
   const [activeTab, setActiveTab] = useState('trending');
@@ -15,17 +16,23 @@ export default function ExploreView({ onNavigate }) {
       fetch('/api/listings')
         .then(res => res.json())
         .then(data => setListings(data))
-        .catch(() => {});
+        .catch(err => {
+          Sentry.captureException(err, { extra: { context: 'fetchListings_Explore' } });
+        });
 
       fetch('/api/transactions')
         .then(res => res.json())
         .then(data => setTransactions(data))
-        .catch(() => {});
+        .catch(err => {
+          Sentry.captureException(err, { extra: { context: 'fetchTransactions_Explore' } });
+        });
 
       fetch('/api/stats')
         .then(res => res.json())
         .then(data => setStats(data))
-        .catch(() => {});
+        .catch(err => {
+          Sentry.captureException(err, { extra: { context: 'fetchStats_Explore' } });
+        });
     };
 
     fetchData();
@@ -52,7 +59,8 @@ export default function ExploreView({ onNavigate }) {
         if (data.choices?.[0]?.message?.content) {
           setMarketInsight(data.choices[0].message.content.replace(/^\"|\"$/g, ''));
         }
-      } catch {
+      } catch (err) {
+        Sentry.captureException(err, { extra: { context: 'generateInsight' } });
         setMarketInsight('Stellar Testnet: Liquidity stable across active sectors.');
       } finally {
         setInsightLoading(false);

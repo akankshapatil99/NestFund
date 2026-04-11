@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import * as Sentry from '@sentry/react';
 
 function ContractPreviewModal({ formData, aiAnalysis, onClose, onDeployComplete }) {
   const [deployed, setDeploy] = useState(false);
@@ -40,6 +41,7 @@ function ContractPreviewModal({ formData, aiAnalysis, onClose, onDeployComplete 
       if (onDeployComplete) onDeployComplete(newListing);
     } catch(err) {
       console.error('Failed to publish listing', err);
+      Sentry.captureException(err, { extra: { context: 'handleDeploy', formData } });
     }
     setLoading(false);
   };
@@ -117,12 +119,16 @@ export default function BusinessView() {
       fetch('/api/stats')
         .then(res => res.json())
         .then(data => setStats(data))
-        .catch(() => {});
+        .catch(err => {
+          Sentry.captureException(err, { extra: { context: 'fetchStats' } });
+        });
 
       fetch('/api/listings')
         .then(res => res.json())
         .then(data => setUserListings(data.slice(0, 2)))
-        .catch(() => {});
+        .catch(err => {
+          Sentry.captureException(err, { extra: { context: 'fetchListings_BusinessView' } });
+        });
     };
 
     fetchData();
@@ -287,6 +293,7 @@ export default function BusinessView() {
                     setAiAnalysis(JSON.parse(content));
                   } catch (e) {
                     console.error('AI Analysis failed', e);
+                    Sentry.captureException(e, { extra: { context: 'AI Analysis', form } });
                     setAiAnalysis({ score: '?', rating: 'ERROR', summary: `Analysis failed: ${e.message}. Ensure your API key is correctly set in .env.` });
                   }
                   setIsAnalyzing(false);

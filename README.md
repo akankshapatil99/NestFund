@@ -32,6 +32,7 @@
 | **Live Portfolio Tracking** | Investors track all on-chain activity and portfolio exposure in real-time |
 | **Learn Mode** | Interactive educational modules teaching DeFi, blockchain, and investing fundamentals |
 | **Explore Mode** | AI-generated market insights and trending business sectors |
+| **Gasless Transactions** | Advanced Fee Sponsorship (SEP-23) allows users to invest without holding XLM for fees |
 
 ---
 
@@ -94,6 +95,7 @@ NestFund is a 4-layer system:
 - [Freighter Wallet](https://freighter.app) browser extension (connected to Testnet)
 - Supabase project with `users`, `listings`, `transactions` tables
 - Groq API key from [console.groq.com](https://console.groq.com)
+- Sentry DSN from [sentry.io](https://sentry.io) for monitoring
 
 ### 1. Clone the repository
 
@@ -108,6 +110,7 @@ cd NestFund
 ```env
 VITE_BACKEND_URL=http://localhost:5001
 VITE_GROQ_API_KEY=your_groq_api_key_here
+VITE_SENTRY_DSN=your_sentry_dsn_here
 VITE_POSTHOG_KEY=your_posthog_project_key  # Optional: For DAU, Analytics & Retention tracking
 ```
 
@@ -115,6 +118,8 @@ VITE_POSTHOG_KEY=your_posthog_project_key  # Optional: For DAU, Analytics & Rete
 ```env
 SUPABASE_URL=your_supabase_project_url
 SUPABASE_KEY=your_supabase_anon_key
+NESTFUND_ADMIN_SECRET=your_admin_secret_for_fee_sponsorship
+SENTRY_DSN=your_sentry_dsn_here
 ```
 
 ### 3. Run locally
@@ -198,6 +203,7 @@ Access the real-time feedback response sheet here:
 ### User Feedback Tracking
 | User Name | User Email | User Wallet Address | User Feedback | Commit ID |
 |---|---|---|---|---|
+| Community User | community@nestfund.org | G... (Multiple Addresses) | "We want to help projects grow by sharing them with our networks." | `fe78b21` |
 | (Example User) | example@email.com | GABCDEFGHIJKLMNOPQRSTUVWXYZ... | "Requested feature..." | `a1b2c3d` |
 
 ---

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { requestAccess, getAddress, signTransaction } from '@stellar/freighter-api';
 import albedoLib from '@albedo-link/intent';
 import * as StellarSdk from 'stellar-sdk';
+import * as Sentry from '@sentry/react';
 
 const albedo = albedoLib?.default || albedoLib;
 
@@ -40,7 +41,10 @@ export default function InvestView({ walletAddress }) {
     fetch(`${API}/api/listings`)
       .then(res => res.json())
       .then(data => setOpportunities(data))
-      .catch(err => console.error('Listings load failed:', err));
+      .catch(err => {
+        console.error('Listings load failed:', err);
+        Sentry.captureException(err, { extra: { context: 'fetchListings' } });
+      });
   }, []);
 
   // ── Fetch wallet transaction history ──
@@ -50,7 +54,10 @@ export default function InvestView({ walletAddress }) {
     fetch(`${API}/api/transactions/${walletAddress}`)
       .then(res => res.json())
       .then(data => setHistory([...data].reverse()))
-      .catch(err => console.error('History load failed:', err))
+      .catch(err => {
+        console.error('History load failed:', err);
+        Sentry.captureException(err, { extra: { context: 'fetchHistory' } });
+      })
       .finally(() => setIsLoadingHistory(false));
   }, [walletAddress]);
 
@@ -73,6 +80,12 @@ export default function InvestView({ walletAddress }) {
   }));
 
   const firstName = userName ? userName.split(' ')[0] : '';
+  
+  const handleShare = (e, opp) => {
+    e.stopPropagation(); // prevent modal from opening
+    const text = `I just found "${opp.name}" on @NestFund! They are raising ₹${opp.targetamount || 0} for their "${opp.sector}" business on the @StellarOrg network. Check it out: https://nestfund-phi.vercel.app`;
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+  };
 
   return (
     <div className="fade-in-section container-responsive" style={{ paddingTop: '40px' }}>
@@ -141,9 +154,18 @@ export default function InvestView({ walletAddress }) {
             <div key={opp.id} className="opp-card glass" onClick={() => setSelectedOpp(opp)}>
               <div className="opp-header">
                 <span className={`opp-risk ${opp.riskclass}`}>{opp.risk}</span>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'rgba(255,191,0,0.1)', padding: '4px 8px', borderRadius: '4px', border: '1px solid rgba(255,191,0,0.2)' }}>
-                   <svg width="10" height="10" viewBox="0 0 24 24" fill="var(--gold)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
-                   <span style={{ fontSize: '10px', color: 'var(--gold)', fontWeight: '700' }}>{opp.aiscore} TRUST</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', background: 'rgba(255,191,0,0.1)', padding: '4px 8px', borderRadius: '4px', border: '1px solid rgba(255,191,0,0.2)' }}>
+                     <svg width="10" height="10" viewBox="0 0 24 24" fill="var(--gold)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14l-5-4.87 6.91-1.01L12 2z"/></svg>
+                     <span style={{ fontSize: '10px', color: 'var(--gold)', fontWeight: '700' }}>{opp.aiscore} TRUST</span>
+                  </div>
+                  <button 
+                    onClick={(e) => handleShare(e, opp)} 
+                    style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '4px', width: '24px', height: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', color: 'var(--muted)' }}
+                    title="Share on X"
+                  >
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                  </button>
                 </div>
               </div>
               <div style={{ position: 'relative' }}>
@@ -344,6 +366,7 @@ function InvestModal({ opp, onClose, walletAddress, onSuccess }) {
       }
     } catch (err) {
       console.error("Stellar Flow Error:", err);
+      Sentry.captureException(err, { extra: { context: 'Stellar Flow Error' } });
       setError(err.message || 'Transaction failed. Ensure Freighter is on Testnet.');
       setStep('input');
     }
@@ -375,6 +398,7 @@ function InvestModal({ opp, onClose, walletAddress, onSuccess }) {
       }
     } catch (err) {
       console.error("Albedo Sign Error:", err);
+      Sentry.captureException(err, { extra: { context: 'Albedo Sign Error' } });
       setError(err.message || "Signing failed. Pop-up may have been blocked.");
       setStep('prepared'); // Stay here to let them try again
     }
@@ -384,9 +408,31 @@ function InvestModal({ opp, onClose, walletAddress, onSuccess }) {
     setStep('processing');
     setStatus('Broadcasting to Global Ledger...');
     try {
-      const txToSubmit = StellarSdk.TransactionBuilder.fromXDR(signedXdr, StellarSdk.Networks.TESTNET);
-      const response = await server.submitTransaction(txToSubmit);
-      const txHash = response.hash;
+       const txToSubmit = StellarSdk.TransactionBuilder.fromXDR(signedXdr, StellarSdk.Networks.TESTNET);
+       
+       // check if it's a fee bump or needs sponsorship
+       let finalXdr = signedXdr;
+       
+       setStatus('Requesting Fee Sponsorship (Gasless)...');
+       try {
+         const sponsorRes = await fetch(`${API}/api/sponsor`, {
+           method: 'POST',
+           headers: { 'Content-Type': 'application/json' },
+           body: JSON.stringify({ xdr: signedXdr })
+         });
+         if (sponsorRes.ok) {
+           const { sponsoredXdr } = await sponsorRes.json();
+           finalXdr = sponsoredXdr;
+           console.log("✨ Transaction sponsored successfully!");
+         }
+       } catch (err) {
+         console.warn("Sponsorship failed, falling back to user fee:", err);
+       }
+
+       setStatus('Broadcasting to Global Ledger...');
+       const finalTx = StellarSdk.TransactionBuilder.fromXDR(finalXdr, StellarSdk.Networks.TESTNET);
+       const response = await server.submitTransaction(finalTx);
+       const txHash = response.hash;
 
       setStatus('Syncing with NestFund Data Network...');
       const postRes = await fetch(`${API}/api/transactions`, {
@@ -428,6 +474,7 @@ function InvestModal({ opp, onClose, walletAddress, onSuccess }) {
        setStep('success');
      } catch (err) {
        console.error("Submission Error:", err);
+       Sentry.captureException(err, { extra: { context: 'Submission Error', tx: signedXdr } });
        let errorMessage = 'Transaction failed during submission.';
        if (err.response?.data?.extras) {
          errorMessage = `Ledger rejected (400): ${JSON.stringify(err.response.data.extras.result_codes)}`;
