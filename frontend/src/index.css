@@ -1727,11 +1727,15 @@ input[type="range"]::-webkit-slider-thumb {
 
 .chat-bubble.user {
   align-self: flex-end;
-  background: var(--teal);
-  color: #000;
-  padding: 12px 16px;
+  max-width: 80%;
+}
+
+.chat-bubble.user .chat-text {
+  background: var(--gold);
+  color: #080c12;
   border-radius: 16px 16px 2px 16px;
-  font-weight: 500;
+  border-color: var(--gold);
+  font-weight: 600;
 }
 
 .chat-bubble.ai-bubble {
@@ -1816,15 +1820,15 @@ input[type="range"]::-webkit-slider-thumb {
 
 .nera-input:focus {
   outline: none;
-  border-color: var(--teal);
-  box-shadow: 0 0 15px var(--teal-dim);
+  border-color: var(--gold);
+  box-shadow: 0 0 15px var(--gold-dim);
 }
 
 .nera-send {
   width: 42px;
   height: 42px;
   border-radius: 12px;
-  background: var(--teal);
+  background: var(--gold);
   color: #000;
   border: none;
   display: flex;
