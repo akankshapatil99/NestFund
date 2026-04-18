@@ -85,6 +85,7 @@ export default function InvestView({ walletAddress }) {
     e.stopPropagation(); // prevent modal from opening
     const text = `I just found "${opp.name}" on @NestFund! They are raising ₹${opp.targetamount || 0} for their "${opp.sector}" business on the @StellarOrg network. Check it out: https://nestfund-phi.vercel.app`;
     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+    console.log("Community Share triggered for:", opp.name);
   };
 
   return (

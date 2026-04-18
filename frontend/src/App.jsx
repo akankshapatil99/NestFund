@@ -9,6 +9,7 @@ import LoginView from './LoginView.jsx';
 import NeRAChat from './NeRAChat.jsx';
 import MetricsView from './MetricsView.jsx';
 import { motion, AnimatePresence } from 'framer-motion';
+import Logo from './Logo.jsx';
 
 function App() {
   const posthog = usePostHog();
@@ -197,14 +198,8 @@ function App() {
 
   {/* NAV */}
   <nav>
-    <div className="logo">
-      <div className="logo-icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="10"></circle>
-          <path d="M12 8v8M8 12h8"></path>
-        </svg>
-      </div>
-      Nest<span>Fund</span>
+    <div className="logo" style={{ cursor: 'pointer' }} onClick={() => setActiveMode('Explore')}>
+      <Logo size={32} variant="full" />
     </div>
 
     <div className="mode-pill">
@@ -250,8 +245,7 @@ function App() {
   {/* FOOTER */}
   <footer>
     <div>
-      <div className="footer-brand">Nest<span>Fund</span></div>
-      <div className="footer-tagline">AI-Powered Fractional Investing on the Stellar Network</div>
+      <Logo size={40} showTagline={true} variant="full" style={{ marginBottom: '10px' }} />
     </div>
     <div className="footer-right">
       <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '8px' }}>

@@ -8,6 +8,9 @@ import posthog from 'posthog-js'
 import { PostHogProvider } from 'posthog-js/react'
 import * as Sentry from "@sentry/react";
 
+// Sentry + PostHog Integrated SPA
+// Version: 1.3
+// Developed with Antigravity
 // Sentry Error Monitoring & Logging
 Sentry.init({
   dsn: import.meta.env.VITE_SENTRY_DSN || "https://8abca21686269d62b8a2d91a516bd7b0@o4511186323046400.ingest.us.sentry.io/4511186326192128",

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Logo from './Logo.jsx';
 import * as Sentry from '@sentry/react';
 import { requestAccess, getAddress, isConnected } from '@stellar/freighter-api';
 import albedoLib from '@albedo-link/intent';
@@ -178,16 +179,8 @@ export default function LoginView({ onLogin }) {
       }}>
 
         {/* Logo */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '36px', justifyContent: 'center' }}>
-          <div style={{ width: '40px', height: '40px', background: 'linear-gradient(135deg, var(--gold), var(--gold-light))', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000', boxShadow: '0 8px 16px rgba(200,169,110,0.2)' }}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="12" r="10"></circle>
-              <path d="M12 8v8M8 12h8"></path>
-            </svg>
-          </div>
-          <span style={{ fontFamily: 'Syne', fontSize: '24px', fontWeight: '800' }}>
-            Nest<span style={{ color: 'var(--teal)' }}>Fund</span>
-          </span>
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '36px' }}>
+          <Logo size={48} variant="full" showTagline={false} />
         </div>
 
         {/* ── SUCCESS STATE ── */}

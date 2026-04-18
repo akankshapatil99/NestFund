@@ -19,6 +19,8 @@
 
 > **Think:** Kickstarter × Coinbase × ChatGPT — built for the next generation of decentralized finance.
 
+**Production Ready:** Fee-Sponsorship, High-Speed Indexing, and 24/7 Monitoring.
+
 ---
 
 ## Key Features
@@ -140,6 +142,30 @@ npm run dev
 
 ---
 
+## 📖 User Guide
+### For Investors
+1. **Connect Wallet**: Click "Connect Wallet" and authorize with Freighter.
+2. **Explore**: Browse listings in the "Invest" tab. Look for high **NeRA Trust Scores**.
+3. **Invest**: Click "Invest Now", Enter amount, and Sign. **Note: Fees are Sponsored (Gasless)!**
+4. **Track**: Monitor your portfolio and transaction history in the "My Ledger" section.
+
+### For Business Owners
+1. **Prepare Proposal**: Navigate to the "Business" tab.
+2. **AI Audit**: Enter your business details. NeRA AI will automatically audit your proposal for risks.
+3. **List Project**: Once audited, your project will be initialized on the Stellar Testnet.
+4. **Collect Funds**: Once the target is met, funds are held securely until the deadline.
+
+---
+
+## 🚀 Production Launch Checklist
+- [x] Sentry DSN configured for Frontend/Backend
+- [x] Supabase Indexes applied for performance
+- [x] PostHog Analytics active for DAU tracking
+- [x] NESTFUND_ADMIN_SECRET set for Gasless Transactions
+- [x] NeRA AI diagnostic check passing (check browser console)
+
+---
+
 ## Smart Contract
 
 The `nestfund_crowdfund` Soroban contract (Rust) manages all on-chain escrow:
@@ -168,6 +194,7 @@ NeRA (NestFund Real-time Advisor) is integrated directly into 4 core flows:
 - **Market Intelligence** — Generates live sector trends in the Explore view
 - **Chat Advisor** — Answers investor questions conversationally
 - **Educational Tutor** — Guides beginners through DeFi concepts in Learn mode
+- **Security Auditor** — Performs automated checks on transaction XDRs and contract signatures
 
 **Powered by:** Groq Llama 3.3 70B (world's fastest LLM inference)
 
@@ -210,9 +237,10 @@ Access the real-time feedback response sheet here:
 
 ---
 
-## User Metrics & Analytics
-
+### User Metrics & Analytics
 NestFund integrates **PostHog** for real-time product analytics, tracking:
+
+- **Verified Integrations**: All Core API flows (Stats, Metrics, Indexer, Sponsor) are verified on production.
 
 | Metric | Description |
 |---|---|

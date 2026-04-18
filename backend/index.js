@@ -22,6 +22,7 @@ Sentry.init({
 
 const app = express();
 const PORT = 5001;
+const API_VERSION = '1.3.0'; // Hybrid Indexing + Gasless
 
 // ─── SUPABASE INITIALIZATION ──────────────────────────────────────────
 const supabaseUrl = process.env.SUPABASE_URL;

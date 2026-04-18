@@ -4,6 +4,27 @@ All notable changes to this project are documented here.
 
 ---
 
+## [1.3.0] — 2026-04-12 — Advanced Gasless Release ⛽
+### Added
+- **Gasless Transactions**: Fee Sponsorship (SEP-23) via Backend-signed Fee Bump transactions.
+- **Admin Sponsor Hub**: Backend `/api/sponsor` endpoint for atomic transaction wrapping.
+- **Improved UX**: Users can now invest with 0 XLM balance for commissions.
+
+## [1.2.0] — 2026-04-11 — Hybrid Indexing Release ⛓️
+### Added
+- **Stellar Indexer**: Background ledger sync engine (`backend/indexer.js`) to prevent data loss.
+- **Manual Sync API**: `/api/index` endpoint for force-synchronizing blockchain events.
+- **Database Indexing**: SQL optimization for PostgreSQL (Supabase) to accelerate dashboard queries.
+
+## [1.1.0] — 2026-04-11 — Production Monitoring Release 🛡️
+### Added
+- **Sentry Integration**: Full-stack error tracking in Frontend (v11) and Backend (v10).
+- **Request Logging**: Morgan middleware integration for Apache-style production logs.
+- **PostHog Analytics**: Event tracking for DAU, retention, and investment conversion.
+- **Error Boundaries**: Root-level React error handling for fail-safe UI recovery.
+
+---
+
 ## [1.0.0] — 2026-03-30 — MVP Release 🎉
 
 ### Added
