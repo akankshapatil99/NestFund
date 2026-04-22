@@ -248,8 +248,11 @@ NestFund integrates **PostHog** for real-time product analytics, tracking:
 | **Transactions** | Every on-chain investment fires a `transaction_completed` event with amount, asset & tx hash |
 | **Retention** | Wallet-based cohort retention — tracks if users return day 1, day 7, day 30 |
 
-### Live DAU Dashboard (PostHog)
-![NestFund DAU Tracking — PostHog Dashboard](./NF%20videos/DAU.png)
+### Live DAU & WAU Dashboard (PostHog)
+![NestFund DAU & WAU Tracking — PostHog Dashboard](./NF%20videos/DAU.png)
+
+### Growth Accounting & Retention (PostHog)
+![NestFund Growth Accounting & Retention — PostHog Dashboard](./NF%20videos/growth.png)
 
 ---
 
