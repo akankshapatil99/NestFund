@@ -10,6 +10,9 @@ import NeRAChat from './NeRAChat.jsx';
 import MetricsView from './MetricsView.jsx';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from './Logo.jsx';
+import AboutView from './AboutView.jsx';
+import PrivacyView from './PrivacyView.jsx';
+import FAQView from './FAQView.jsx';
 
 function App() {
   const posthog = usePostHog();
@@ -165,6 +168,11 @@ function App() {
     };
   }, []);
 
+  // Scroll to top on mode change
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [activeMode]);
+
   // ── Gate: show login if no session or missing profile info ────────
   // This ensures everyone sees the new Name/Email form at least once.
   if (!loggedInAddress || !userName) {
@@ -238,20 +246,50 @@ function App() {
         {activeMode === 'Invest' && <InvestView portfolioVal={portfolioVal} c1={c1} c2={c2} c3={c3} c4={c4} walletAddress={walletAddress} />}
         {activeMode === 'Business' && <BusinessView walletAddress={walletAddress} />}
         {activeMode === 'Metrics' && <MetricsView />}
+        {activeMode === 'About' && <AboutView />}
+        {activeMode === 'Privacy' && <PrivacyView />}
+        {activeMode === 'FAQ' && <FAQView />}
       </motion.div>
     </AnimatePresence>
   </main>
 
   {/* FOOTER */}
   <footer>
-    <div>
+    <div style={{ maxWidth: '300px' }}>
       <Logo size={40} showTagline={true} variant="full" style={{ marginBottom: '10px' }} />
+      <p style={{ fontSize: '13px', color: 'var(--muted)', marginTop: '15px', lineHeight: '1.6' }}>
+        The world's first decentralized real estate investment trust powered by Stellar. 
+        Secure, transparent, and accessible to everyone.
+      </p>
     </div>
-    <div className="footer-right">
-      <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '8px' }}>
+    
+    <div className="footer-links">
+      <div className="footer-column">
+        <h4>Platform</h4>
+        <a className="footer-link" onClick={() => setActiveMode('Explore')}>Home</a>
+        <a className="footer-link" onClick={() => setActiveMode('Invest')}>Opportunities</a>
+        <a className="footer-link" onClick={() => setActiveMode('Business')}>For Business</a>
+        <a className="footer-link" onClick={() => setActiveMode('Metrics')}>Metrics</a>
+      </div>
+      <div className="footer-column">
+        <h4>Company</h4>
+        <a className="footer-link" onClick={() => setActiveMode('About')}>About Us</a>
+        <a className="footer-link" onClick={() => setActiveMode('FAQ')}>FAQs</a>
+        <a className="footer-link" href="#">Contact</a>
+      </div>
+      <div className="footer-column">
+        <h4>Legal</h4>
+        <a className="footer-link" onClick={() => setActiveMode('Privacy')}>Privacy Policy</a>
+        <a className="footer-link" href="#">Terms of Service</a>
+        <a className="footer-link" href="#">Cookie Policy</a>
+      </div>
+    </div>
+
+    <div className="footer-right" style={{ textAlign: 'right' }}>
+      <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginBottom: '15px', justifyContent: 'flex-end' }}>
         <div className="stellar-badge" style={{ margin: 0 }}>Powered by Stellar · Soroban</div>
       </div>
-      <div>© 2026 NestFund · All rights reserved</div>
+      <div style={{ fontSize: '12px', color: 'var(--text-dim-extra)' }}>© 2026 NestFund · All rights reserved</div>
     </div>
   </footer>
 
