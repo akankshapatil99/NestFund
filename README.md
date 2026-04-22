@@ -225,7 +225,7 @@ Access the real-time feedback response sheet here:
 - [NestFund Feedback Response Sheet](https://docs.google.com/spreadsheets/d/14BVVjDBkzcaf6usZwAAibzn9z-AfrcMyW_Yz-LIUDTE/edit?usp=sharing)
 
 **Feedback Snapshot:**
-![User Feedback Response Sheet](./NF%20videos/supabase.png)
+![User Feedback Response Sheet](./NF%20videos/feedback.png)
 
 ---
 
