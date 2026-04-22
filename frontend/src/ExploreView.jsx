@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import * as Sentry from '@sentry/react';
+import AIMarketPulse from './AIMarketPulse.jsx';
 
 export default function ExploreView({ onNavigate }) {
   const [activeTab, setActiveTab] = useState('trending');
@@ -193,6 +194,11 @@ export default function ExploreView({ onNavigate }) {
             </div>
           ))}
         </motion.div>
+
+        {/* ── AI MARKET PULSE ── */}
+        <div style={{ marginBottom: '56px' }}>
+          <AIMarketPulse />
+        </div>
 
         {/* ── SECTOR + LIVE LEDGER ── */}
         <div className="grid-2-1" style={{ marginBottom: '72px' }}>

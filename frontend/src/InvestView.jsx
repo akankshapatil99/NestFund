@@ -4,6 +4,8 @@ import { requestAccess, getAddress, signTransaction } from '@stellar/freighter-a
 import albedoLib from '@albedo-link/intent';
 import * as StellarSdk from 'stellar-sdk';
 import * as Sentry from '@sentry/react';
+import AIPortfolioInsights from './AIPortfolioInsights.jsx';
+import AIRiskAuditor from './AIRiskAuditor.jsx';
 
 const albedo = albedoLib?.default || albedoLib;
 
@@ -20,6 +22,7 @@ export default function InvestView({ walletAddress }) {
   const [isLoadingHistory, setIsLoadingHistory] = useState(false);
   const [opportunities, setOpportunities] = useState([]);
   const [activeTab, setActiveTab] = useState('trending');
+  const [auditListing, setAuditListing] = useState(null);
 
   const [userName, setUserName] = useState(localStorage.getItem('nestfund_name') || '');
 
@@ -200,7 +203,25 @@ export default function InvestView({ walletAddress }) {
                 <span>{opp.remaining} Left</span>
               </div>
 
-              <button className="btn-secondary" style={{ width: '100%', marginTop: '20px' }}>Invest Now</button>
+              <div style={{ display: 'flex', gap: '8px', marginTop: '20px' }}>
+                <button className="btn-secondary" style={{ flex: 1 }}>Invest Now</button>
+                <button 
+                  onClick={(e) => { e.stopPropagation(); setAuditListing(opp); }}
+                  style={{ 
+                    background: 'rgba(45,212,191,0.08)', border: '1px solid rgba(45,212,191,0.2)',
+                    borderRadius: '10px', padding: '8px 14px', cursor: 'pointer',
+                    color: 'var(--teal)', fontSize: '11px', fontWeight: 700,
+                    fontFamily: 'JetBrains Mono', transition: 'all 0.2s',
+                    display: 'flex', alignItems: 'center', gap: '4px'
+                  }}
+                  title="AI Risk Audit"
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/>
+                  </svg>
+                  Audit
+                </button>
+              </div>
             </div>
           ))
         )}
@@ -256,6 +277,14 @@ export default function InvestView({ walletAddress }) {
           </div>
         )}
       </div>
+
+      {/* ─── AI Portfolio Intelligence ─── */}
+      <AIPortfolioInsights walletAddress={walletAddress} />
+
+      {/* ─── AI Risk Auditor Modal ─── */}
+      {auditListing && (
+        <AIRiskAuditor listing={auditListing} onClose={() => setAuditListing(null)} />
+      )}
 
       {/* ─── Invest Modal ─── */}
       {selectedOpp && (
