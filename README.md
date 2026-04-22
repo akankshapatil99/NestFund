@@ -227,14 +227,6 @@ Access the real-time feedback response sheet here:
 **Feedback Snapshot:**
 ![User Feedback Response Sheet](./NF%20videos/supabase.png)
 
-### User Feedback Tracking
-| User Name | User Email | User Wallet Address | User Feedback | Commit ID |
-|---|---|---|---|---|
-| Community User | community@nestfund.org | G... (Multiple Addresses) | "We want to help projects grow by sharing them with our networks." | `fe78b21` |
-| (Example User) | example@email.com | GABCDEFGHIJKLMNOPQRSTUVWXYZ... | "Requested feature..." | `a1b2c3d` |
-
----
-
 ---
 
 ### User Metrics & Analytics
