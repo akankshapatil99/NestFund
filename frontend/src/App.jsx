@@ -275,7 +275,7 @@ function App() {
         <h4>Company</h4>
         <a className="footer-link" onClick={() => setActiveMode('About')}>About Us</a>
         <a className="footer-link" onClick={() => setActiveMode('FAQ')}>FAQs</a>
-        <a className="footer-link" href="#">Contact</a>
+        <a className="footer-link" onClick={() => window.location.href = "mailto:support@nestfund.io"}>Contact</a>
       </div>
       <div className="footer-column">
         <h4>Legal</h4>

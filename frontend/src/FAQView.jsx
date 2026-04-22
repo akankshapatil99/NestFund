@@ -104,7 +104,13 @@ function FAQView() {
       <div className="glass-card" style={{ padding: '40px', textAlign: 'center', border: '1px solid var(--teal)' }}>
         <h3 style={{ marginBottom: '10px' }}>Still have questions?</h3>
         <p style={{ color: 'var(--text-dim)', marginBottom: '20px' }}>Our support team is here to help you 24/7.</p>
-        <button className="primary-btn" style={{ background: 'var(--teal)', borderColor: 'var(--teal)' }}>Contact Support</button>
+        <button 
+          className="primary-btn" 
+          style={{ background: 'var(--teal)', borderColor: 'var(--teal)' }}
+          onClick={() => window.location.href = "mailto:support@nestfund.io"}
+        >
+          Contact Support
+        </button>
       </div>
     </div>
   );

@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
-
 function AboutView() {
+  const [joined, setJoined] = useState(false);
+
   return (
     <div className="view-container">
       <motion.div 
@@ -56,9 +58,19 @@ function AboutView() {
       </section>
 
       <div className="glass-card" style={{ padding: '60px', textAlign: 'center', background: 'linear-gradient(135deg, rgba(20,21,26,0.8) 0%, rgba(30,41,59,0.4) 100%)' }}>
-        <h2 style={{ marginBottom: '20px' }}>Ready to start your journey?</h2>
-        <p style={{ marginBottom: '30px', color: 'var(--text-dim)' }}>Join thousands of investors already building their future with NestFund.</p>
-        <button className="primary-btn" style={{ padding: '12px 40px' }}>Join the Waitlist</button>
+        <h2 style={{ marginBottom: '20px' }}>{joined ? "You're on the list! 🚀" : "Ready to start your journey?"}</h2>
+        <p style={{ marginBottom: '30px', color: 'var(--text-dim)' }}>
+          {joined ? "Thank you for joining. We'll notify you as soon as new property listings go live." : "Join thousands of investors already building their future with NestFund."}
+        </p>
+        {!joined && (
+          <button 
+            className="primary-btn" 
+            style={{ padding: '12px 40px' }}
+            onClick={() => setJoined(true)}
+          >
+            Join the Waitlist
+          </button>
+        )}
       </div>
     </div>
   );
