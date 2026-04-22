@@ -107,7 +107,7 @@ function FAQView() {
         <button 
           className="primary-btn" 
           style={{ background: 'var(--teal)', borderColor: 'var(--teal)' }}
-          onClick={() => window.location.href = "mailto:support@nestfund.io"}
+          onClick={() => window.location.href = "mailto:akankshapatil2099@gmail.com"}
         >
           Contact Support
         </button>

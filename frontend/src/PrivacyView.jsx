@@ -59,7 +59,7 @@ function PrivacyView() {
           <h2 style={{ color: 'var(--white)', marginBottom: '15px' }}>5. Contact Us</h2>
           <p>
             If you have any questions about this privacy policy or our privacy practices, please contact us 
-            at: <span style={{ color: 'var(--gold)' }}>privacy@nestfund.io</span>
+            at: <span style={{ color: 'var(--gold)' }}>akankshapatil2099@gmail.com</span>
           </p>
         </section>
       </div>
