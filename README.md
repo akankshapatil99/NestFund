@@ -246,6 +246,9 @@ NestFund integrates **PostHog** for real-time product analytics, tracking:
 ### Growth Accounting & Retention (PostHog)
 ![NestFund Growth Accounting & Retention — PostHog Dashboard](./NF%20videos/growth.png)
 
+### Live Activity Dashboard
+![NestFund Live Activity Dashboard](./NF%20videos/live%20activity.png)
+
 ### Registered Users — Stellar Wallet Addresses
 
 | # | Wallet Address (Stellar Testnet) |
