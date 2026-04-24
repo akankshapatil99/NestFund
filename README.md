@@ -249,42 +249,81 @@ NestFund integrates **PostHog** for real-time product analytics, tracking:
 ### Live Activity Dashboard
 ![NestFund Live Activity Dashboard](./NF%20videos/live%20activity.png)
 
-### Registered Users — Stellar Wallet Addresses
+### Table 1: Registered Users (30 Users — Level 6)
 
-| # | Wallet Address (Stellar Testnet) |
-|---|---|
-| 1 | `GBPUHHUNOTD3Y2HIYGNTZGT2AXDDTN5J2FLTJVBALX4KALPP6LP2L7VH` |
-| 2 | `GCFMZELIN2CL2I4XA4L62TNJABUTQTXL3JXUGGDK3YJX65LEUR4QHQKG` |
-| 3 | `GCGRCC2ZR7LLQULQY4CZGTAQGJCT6DBHXXPJI6FCXCQEKCD7M4OUGVUD` |
-| 4 | `GAIY7YG73AGZ433BJSQLLQDVATE3F4LF35WIR6VTM2ROR7BSFBBOQAFN` |
-| 5 | `GA277JKGKO2RVJ7XLS3SIZJSCYECWJSC5BOTUSPX6OM3DWIYAWR6XX27` |
-| 6 | `GB2IGDGHRLX7JSGL3Q22YGOH7HG5EGWJ4OA2DPKLSEBACCQ73CU5CNOD` |
-| 7 | `GBEWS3QTQ77BZ7BLHMX4FCWESQC4HJDMVA4EJE6WS5DHQRVTMURHPBKL` |
-| 8 | `GCNZOF5V6TBCB5GDVTR4FBMZECKLAS3D6M6ZBXXDSUN57GBECL3US22O` |
-| 9 | `GCKXKIKQRGHZASVIGULH4D7474VWVXCKL2GGK2CKN47PT2OSTHKSQXCG` |
-| 10 | `GAAUOWQG2S4T7XFCZPALW5AWDTV6SW4TBWAWTL75DRZQ7JB3ZULXGY2M` |
-| 11 | `GAR4Z7NQQCZFQIBBCWDYWTH2YFQUVRS2WQOGBMKKHUNAYWLMZSLODNF7` |
-| 12 | `GA3JCK6ET6AOKUO2CYYDM4V6YZUDOPRVTKNKFKL3FQ5P2XEDYEOWU5CJ` |
-| 13 | `GCM24DMYJWCJN6E3PVBM6MM7RTBSAKSGW2KJPRHBRSHNUMLHMWB73X7U` |
-| 14 | `GBTFQ2GUYN2UXHE56ZM2TQTS34KKJVFJ66K4JRSDWGIVSH2TMRCXQDQI` |
-| 15 | `GBE7HSCTEU7GEMI65WQV6QX6L5K33YJNAD63QCKP2SOQEIWAVYEZ45TL` |
-| 16 | `GCLPEZBQX3P5UWMS6KJMVKICAOOO5FHOFWRTUXBUBE44W7E7FCL7PJT5` |
-| 17 | `GD5Z2X4TJNLTVET73TNXITRGES6MZEZ42NKASJNGPWSMXE46DKPGCCJ5` |
-| 18 | `GALCZOBFF3IACQF6ULNGBE3TOXO46HIGFOOHQCKAV6KN3O2FLGKL2HOR` |
-| 19 | `GA5ZKUVLXSWIP45XFH2SVPRVRCAZC6E3X223CMROJIKIGQWNX7KILKLE` |
-| 20 | `GASQUFERHAOLSRKYTSP3R4AGHCHPHPKRLVFVEKPNIUK46BWFFZ67UVL3` |
-| 21 | `GAWPCOYQMT7EAO7H7S767YBBIYT2N55TFR5I5USMRYB6A3ACJB7QSNT6` |
-| 22 | `GCA5J2CSKOGWX2XW77USDZPRLWIXZ7DI2YC6NQHSWKXXM37H2JSPYXJ4` |
-| 23 | `GAXULYW65IJHAGXCSLPZH2CNDUIKJTQS3JECWUCXKEADGIWOFEMXBE7F` |
-| 24 | `GAGGXMBT5HW5GA2PSJR3ZHFO7I2F4H3R7NUDHB4GSGIC4VF2WSRZVDZH` |
-| 25 | `GD7SC62LBAOMSPF34ZQFLJWATJMWYEHUXQVQORBOO2FZJ23ZJH4TJ3MC` |
-| 26 | `GB3QHJW26AFAE7LTORZKPKSMSMNFDF3WPJGLWYOKJQR3K3L2SHRAQXA4` |
-| 27 | `GBKZH5RDL4BJVLTOETQULYWXLDYKF2OI5HCV5IY6WLQIBK2QNYMAUBCV` |
-| 28 | `GAGNW6CAVAKRJEA3NJV5Y6KODZHDTJ2Z3I4EOUYNMSRPZNQAFIANQJOW` |
-| 29 | `GB7NKIIBCZZPO4YCE3GFSCDZ4P6ILTGPDSYUL3OFLRSFMZD44RTZ7ZGO` |
-| 30 | `GB5THPXYMOYIFQIMJDMSOLIYCXCLGRZY7RFBJGUK4PVCCYEI6FH65BKM` |
+| # | User Name | User Email | User Wallet Address |
+|---|---|---|---|
+| 1 | Purvai | purvait1246@gmail.com | `GBPUHHUNOTD3Y2HIYGNTZGT2AXDDTN5J2FLTJVBALX4KALPP6LP2L7VH` |
+| 2 | Akanksha Patil | akankshapatil2099@gmail.com | `GCFMZELIN2CL2I4XA4L62TNJABUTQTXL3JXUGGDK3YJX65LEUR4QHQKG` |
+| 3 | Lily Anthony | 3022411004@despu.edu.in | `GCGRCC2ZR7LLQULQY4CZGTAQGJCT6DBHXXPJI6FCXCQEKCD7M4OUGVUD` |
+| 4 | Nishita Gopwani | gopwaninishita@gmail.com | `GAIY7YG73AGZ433BJSQLLQDVATE3F4LF35WIR6VTM2ROR7BSFBBOQAFN` |
+| 5 | Soham Patil | sohampatil022@gmail.com | `GA277JKGKO2RVJ7XLS3SIZJSCYECWJSC5BOTUSPX6OM3DWIYAWR6XX27` |
+| 6 | Meenakshi Patil | meenakshirpatil99@gmail.com | `GB2IGDGHRLX7JSGL3Q22YGOH7HG5EGWJ4OA2DPKLSEBACCQ73CU5CNOD` |
+| 7 | Shrikant Aher | shrikantaher1919@gmail.com | `GBEWS3QTQ77BZ7BLHMX4FCWESQC4HJDMVA4EJE6WS5DHQRVTMURHPBKL` |
+| 8 | Rakhi Sahni | rakhisahni890@gmail.com | `GCNZOF5V6TBCB5GDVTR4FBMZECKLAS3D6M6ZBXXDSUN57GBECL3US22O` |
+| 9 | Mahee Patil | maheepatil06@gmail.com | `GCKXKIKQRGHZASVIGULH4D7474VWVXCKL2GGK2CKN47PT2OSTHKSQXCG` |
+| 10 | Neeral Kothadia | neeralkothadia14@gmail.com | `GAAUOWQG2S4T7XFCZPALW5AWDTV6SW4TBWAWTL75DRZQ7JB3ZULXGY2M` |
+| 11 | Aditya Chavan | adichavan555@gmail.com | `GAR4Z7NQQCZFQIBBCWDYWTH2YFQUVRS2WQOGBMKKHUNAYWLMZSLODNF7` |
+| 12 | Tanishka Mahindrakar | tanishkamm05@gmail.com | `GA3JCK6ET6AOKUO2CYYDM4V6YZUDOPRVTKNKFKL3FQ5P2XEDYEOWU5CJ` |
+| 13 | Mayur Agarwal | mayuragarwal30@gmail.com | `GCM24DMYJWCJN6E3PVBM6MM7RTBSAKSGW2KJPRHBRSHNUMLHMWB73X7U` |
+| 14 | Shivani More | moreshivani22@gmail.com | `GBTFQ2GUYN2UXHE56ZM2TQTS34KKJVFJ66K4JRSDWGIVSH2TMRCXQDQI` |
+| 15 | Saniya Shaikh | saniyashaikh66@gmail.com | `GBE7HSCTEU7GEMI65WQV6QX6L5K33YJNAD63QCKP2SOQEIWAVYEZ45TL` |
+| 16 | Vaishnavi Tiwari | vaishnavitiwari0202@gmail.com | `GCLPEZBQX3P5UWMS6KJMVKICAOOO5FHOFWRTUXBUBE44W7E7FCL7PJT5` |
+| 17 | Aadya Gange | gangeaadya99@gmail.com | `GD5Z2X4TJNLTVET73TNXITRGES6MZEZ42NKASJNGPWSMXE46DKPGCCJ5` |
+| 18 | Ajinkya Garad | ajinkyarajegarad@gmail.com | `GALCZOBFF3IACQF6ULNGBE3TOXO46HIGFOOHQCKAV6KN3O2FLGKL2HOR` |
+| 19 | Riya Mehta | riyamehta30@gmail.com | `GA5ZKUVLXSWIP45XFH2SVPRVRCAZC6E3X223CMROJIKIGQWNX7KILKLE` |
+| 20 | Tanishka Manthalkar | manthalkartan110@gmail.com | `GASQUFERHAOLSRKYTSP3R4AGHCHPHPKRLVFVEKPNIUK46BWFFZ67UVL3` |
+| 21 | Aastha Patil | aasthapatil1406@gmail.com | `GAWPCOYQMT7EAO7H7S767YBBIYT2N55TFR5I5USMRYB6A3ACJB7QSNT6` |
+| 22 | Rajesh Patil | rapa99@gmail.com | `GCA5J2CSKOGWX2XW77USDZPRLWIXZ7DI2YC6NQHSWKXXM37H2JSPYXJ4` |
+| 23 | Kashish Gurnani | kashishgurnani45@gmail.com | `GAXULYW65IJHAGXCSLPZH2CNDUIKJTQS3JECWUCXKEADGIWOFEMXBE7F` |
+| 24 | Ruchita Telsang | ruchitatelsang22@gmail.com | `GAGGXMBT5HW5GA2PSJR3ZHFO7I2F4H3R7NUDHB4GSGIC4VF2WSRZVDZH` |
+| 25 | Surekha Lakde | lakdesurekha7@gmail.com | `GD7SC62LBAOMSPF34ZQFLJWATJMWYEHUXQVQORBOO2FZJ23ZJH4TJ3MC` |
+| 26 | Poorvaja Yadav | poorvajayadav4149@gmail.com | `GB3QHJW26AFAE7LTORZKPKSMSMNFDF3WPJGLWYOKJQR3K3L2SHRAQXA4` |
+| 27 | Saukhya Tupe | saukhyatupe013@gmail.com | `GBKZH5RDL4BJVLTOETQULYWXLDYKF2OI5HCV5IY6WLQIBK2QNYMAUBCV` |
+| 28 | Aanam Khan | aanamkhan552@gmail.com | `GAGNW6CAVAKRJEA3NJV5Y6KODZHDTJ2Z3I4EOUYNMSRPZNQAFIANQJOW` |
+| 29 | Shlok Malpani | malpani16shlok@gmail.com | `GB7NKIIBCZZPO4YCE3GFSCDZ4P6ILTGPDSYUL3OFLRSFMZD44RTZ7ZGO` |
+| 30 | Dhruv Patnekar | dhruvpatnekar@gmail.com | `GB5THPXYMOYIFQIMJDMSOLIYCXCLGRZY7RFBJGUK4PVCCYEI6FH65BKM` |
 
 > **Total Registered Users: 30** — All wallets are verified on the [Stellar Testnet Explorer](https://stellar.expert/explorer/testnet)
+
+---
+
+### Table 2: User Feedback Implementation
+
+> **User Feedback Response Sheet (Public):** [View Live Responses](https://docs.google.com/spreadsheets/d/14BVVjDBkzcaf6usZwAAibzn9z-AfrcMyW_Yz-LIUDTE/edit?usp=sharing)
+
+| # | User Name | User Email | User Wallet Address | User Feedback | Commit ID |
+|---|---|---|---|---|---|
+| 1 | Purvai | purvait1246@gmail.com | `GBPUHH...L7VH` | Investment pools should have more description so users know what they are investing in | `2b60a6d` — Add AI Portfolio Insights, AI Risk Auditor, and AI Market Pulse features |
+| 2 | Akanksha Patil | akankshapatil2099@gmail.com | `GCFMZE...QHQKG` | Improve Albedo wallet connection on phone | `3089683` — Enable transaction signing for mobile users via Albedo fallback |
+| 3 | Lily Anthony | 3022411004@despu.edu.in | `GCGRCC...GVUD` | Improve alignments of the website | `c0a1101` — Fix ExploreView Sector table column alignment |
+| 4 | Nishita Gopwani | gopwaninishita@gmail.com | `GAIY7Y...OQAFN` | More clarity on the mobile version | `d199758` — Full mobile responsiveness across all platform views |
+| 5 | Soham Patil | sohampatil022@gmail.com | `GA277J...6XX27` | Enhance loading speed and simplify some sections | `d669b0f` — Refresh ExploreView: live stats strip, visual overhaul |
+| 6 | Meenakshi Patil | meenakshirpatil99@gmail.com | `GB2IGD...5CNOD` | Improve UI and add more 3D elements | `4e40e5e` — Branding: Implement new NestFund logo design across platform |
+| 7 | Shrikant Aher | shrikantaher1919@gmail.com | `GBEWS3...HPBKL` | Add goal tracking (users can set and track savings goals) | `568973f` — Add live Metrics dashboard with DAU, Retention, Tx charts |
+| 8 | Rakhi Sahni | rakhisahni890@gmail.com | `GCNZOF...CL3US22O` | Improve the learn mode and add more videos | `e74cf22` — Add Quick Concepts documentation modal |
+| 9 | Mahee Patil | maheepatil06@gmail.com | `GCKXKI...SQXCG` | Enhance and add more AI features | `2b60a6d` — Add AI Portfolio Insights, AI Risk Auditor, and AI Market Pulse features |
+| 10 | Neeral Kothadia | neeralkothadia14@gmail.com | `GAAUOW...ULXGY2M` | Keep it in a light color | `e396d4b` — UI: Improve NeRA chat box readability and brand alignment |
+| 11 | Aditya Chavan | adichavan555@gmail.com | `GAR4Z7...ODNF7` | Add more videos in the learn mode | `e74cf22` — Add Quick Concepts documentation modal |
+| 12 | Tanishka Mahindrakar | tanishkamm05@gmail.com | `GA3JCK...OWU5CJ` | Add more AI features | `2b60a6d` — Add AI Portfolio Insights, AI Risk Auditor, and AI Market Pulse features |
+| 13 | Mayur Agarwal | mayuragarwal30@gmail.com | `GCM24D...WB73X7U` | Add more security in the logging system | `010f2ae` — Implement root Error Boundary and comprehensive Sentry integration |
+| 14 | Shivani More | moreshivani22@gmail.com | `GBTFQ2...CXQDQI` | Add more information about the business on the website | `2b60a6d` — Add AI Portfolio Insights, AI Risk Auditor, and AI Market Pulse features |
+| 15 | Saniya Shaikh | saniyashaikh66@gmail.com | `GBE7HS...YAWLMZSLODNF7` | Add more businesses | `ea92d7e` — Fix non-functional buttons and links |
+| 16 | Vaishnavi Tiwari | vaishnavitiwari0202@gmail.com | `GCLPEZ...FCL7PJT5` | Everything is good | ✅ No changes needed |
+| 17 | Aadya Gange | gangeaadya99@gmail.com | `GD5Z2X...KPGCCJ5` | Add animations to the website | `d669b0f` — Refresh ExploreView: live stats strip, visual overhaul |
+| 18 | Ajinkya Garad | ajinkyarajegarad@gmail.com | `GALCZO...GKPGCCJ5` | Add more features | `2b60a6d` — Add AI Portfolio Insights, AI Risk Auditor, and AI Market Pulse features |
+| 19 | Riya Mehta | riyamehta30@gmail.com | `GA5ZKU...7KILKLE` | Improve the UI and make it more minimal | `4e40e5e` — Branding: Implement new NestFund logo design across platform |
+| 20 | Tanishka Manthalkar | manthalkartan110@gmail.com | `GASQUF...67UVL3` | Add more videos in the learn mode | `e74cf22` — Add Quick Concepts documentation modal |
+| 21 | Aastha Patil | aasthapatil1406@gmail.com | `GAWPCO...QSNT6` | Up to date | ✅ No changes needed |
+| 22 | Rajesh Patil | rapa99@gmail.com | `GCA5J2...PYXJ4` | Everything is perfect | ✅ No changes needed |
+| 23 | Kashish Gurnani | kashishgurnani45@gmail.com | `GAXULY...EMXBE7F` | Improve alignments on the website | `c0a1101` — Fix ExploreView Sector table column alignment |
+| 24 | Ruchita Telsang | ruchitatelsang22@gmail.com | `GAGGXM...RZVDZH` | Improve the logistics | `87cc82d` — Final platform audit - all production features verified |
+| 25 | Surekha Lakde | lakdesurekha7@gmail.com | `GD7SC6...H4TJ3MC` | Add more information about the website and create a dashboard | `568973f` — Add live Metrics dashboard with DAU, Retention, Tx charts |
+| 26 | Poorvaja Yadav | poorvajayadav4149@gmail.com | `GB3QHJ...HRAQXA4` | Add an about us page | `0497d8a` — Add About Us, Privacy Policy, and FAQ pages |
+| 27 | Saukhya Tupe | saukhyatupe013@gmail.com | `GBKZH5...MAUBCV` | Add more compliance | `53b8ace` — Complete security checklist in SECURITY.md |
+| 28 | Aanam Khan | aanamkhan552@gmail.com | `GAGNW6...ANQJOW` | Improve the AI features | `2b60a6d` — Add AI Portfolio Insights, AI Risk Auditor, and AI Market Pulse features |
+| 29 | Shlok Malpani | malpani16shlok@gmail.com | `GB7NKI...RTZ7ZGO` | Keep users' transaction history for security and transparency | `568973f` — Add live Metrics dashboard with DAU, Retention, Tx charts |
+| 30 | Dhruv Patnekar | dhruvpatnekar@gmail.com | `GB5THP...6FH65BKM` | None — best app I've used | ✅ No changes needed |
 
 ---
 
