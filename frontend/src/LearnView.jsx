@@ -60,7 +60,27 @@ export default function LearnView({ portfolioVal }) {
       dur: "00:45",
       prompt: "Tell me about Stellar Security",
       subtitle: "Node Sync: Ping globally... Frankfurt Node [OK]... Singapore Node [OK]... Multi-sig consensus reached in 3 seconds... Encryption grade: AES-256."
-    }
+    },
+    {
+      id: 4,
+      title: "DeFi Yield Strategies",
+      desc: "Learn how decentralized finance protocols generate sustainable yields through liquidity provision and staking.",
+      img: "/assets/module_1.png",
+      video: "/assets/videos/fractional_investing.mp4",
+      dur: "02:15",
+      prompt: "How do DeFi yield strategies work?",
+      subtitle: "DeFi Scan: Analyzing liquidity pools... APY calculation engine active... Risk-adjusted return modeling... Compound interest simulation running..."
+    },
+    {
+      id: 5,
+      title: "Portfolio Diversification",
+      desc: "Master the art of spreading investments across multiple asset classes to minimize risk and maximize long-term returns.",
+      img: "/assets/module_2.png",
+      video: "/assets/videos/smart_contracts.mp4",
+      dur: "01:50",
+      prompt: "How should I diversify my portfolio?",
+      subtitle: "Portfolio Engine: Correlation matrix computed... Sector allocation optimized... Risk parity achieved... Rebalancing schedule configured..."
+    },
   ];
 
   return (

@@ -15,6 +15,8 @@ Your identity and rules:
 - Educational guidance, not financial advice.`;
 
 const SUGGESTED = [
+  "Analyze current market trends",
+  "Generate a risk prediction model",
   "What is invoice financing?",
   "How do smart contracts protect my money?",
   "What's a good AI risk score?",

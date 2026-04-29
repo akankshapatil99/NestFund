@@ -125,7 +125,7 @@ export default function BusinessView() {
 
       fetch('/api/listings')
         .then(res => res.json())
-        .then(data => setUserListings(data.slice(0, 2)))
+        .then(data => setUserListings(data.slice(0, 6)))
         .catch(err => {
           Sentry.captureException(err, { extra: { context: 'fetchListings_BusinessView' } });
         });
