@@ -290,39 +290,37 @@ NestFund integrates **PostHog** for real-time product analytics, tracking:
 
 ### Table 2: User Feedback Implementation
 
-> **User Feedback Response Sheet (Public):** [View Live Responses](https://docs.google.com/spreadsheets/d/14BVVjDBkzcaf6usZwAAibzn9z-AfrcMyW_Yz-LIUDTE/edit?usp=sharing)
-
 | # | User Name | User Email | User Wallet Address | User Feedback | Commit ID |
 |---|---|---|---|---|---|
-| 1 | Purvai | purvait1246@gmail.com | `GBPUHH...L7VH` | Investment pools should have more description so users know what they are investing in | `2b60a6d` — Add AI Portfolio Insights, AI Risk Auditor, and AI Market Pulse features |
+| 1 | Purvai | purvait1246@gmail.com | `GBPUHH...L7VH` | Investment pools should have more description so users know what they are investing in | `4a2d4d6` — feat(invest): introduce savings tracker, chronological ledger, and pool insights |
 | 2 | Akanksha Patil | akankshapatil2099@gmail.com | `GCFMZE...QHQKG` | Improve Albedo wallet connection on phone | `3089683` — Enable transaction signing for mobile users via Albedo fallback |
 | 3 | Lily Anthony | 3022411004@despu.edu.in | `GCGRCC...GVUD` | Improve alignments of the website | `c0a1101` — Fix ExploreView Sector table column alignment |
 | 4 | Nishita Gopwani | gopwaninishita@gmail.com | `GAIY7Y...OQAFN` | More clarity on the mobile version | `d199758` — Full mobile responsiveness across all platform views |
-| 5 | Soham Patil | sohampatil022@gmail.com | `GA277J...6XX27` | Enhance loading speed and simplify some sections | `d669b0f` — Refresh ExploreView: live stats strip, visual overhaul |
-| 6 | Meenakshi Patil | meenakshirpatil99@gmail.com | `GB2IGD...5CNOD` | Improve UI and add more 3D elements | `4e40e5e` — Branding: Implement new NestFund logo design across platform |
-| 7 | Shrikant Aher | shrikantaher1919@gmail.com | `GBEWS3...HPBKL` | Add goal tracking (users can set and track savings goals) | `568973f` — Add live Metrics dashboard with DAU, Retention, Tx charts |
-| 8 | Rakhi Sahni | rakhisahni890@gmail.com | `GCNZOF...CL3US22O` | Improve the learn mode and add more videos | `e74cf22` — Add Quick Concepts documentation modal |
-| 9 | Mahee Patil | maheepatil06@gmail.com | `GCKXKI...SQXCG` | Enhance and add more AI features | `2b60a6d` — Add AI Portfolio Insights, AI Risk Auditor, and AI Market Pulse features |
+| 5 | Soham Patil | sohampatil022@gmail.com | `GA277J...6XX27` | Enhance loading speed and simplify some sections | `84b8a96` — perf(core): implement lazy loading and enhance 3D scene rendering |
+| 6 | Meenakshi Patil | meenakshirpatil99@gmail.com | `GB2IGD...5CNOD` | Improve UI and add more 3D elements | `84b8a96` — perf(core): implement lazy loading and enhance 3D scene rendering |
+| 7 | Shrikant Aher | shrikantaher1919@gmail.com | `GBEWS3...HPBKL` | Add goal tracking (users can set and track savings goals) | `4a2d4d6` — feat(invest): introduce savings tracker, chronological ledger, and pool insights |
+| 8 | Rakhi Sahni | rakhisahni890@gmail.com | `GCNZOF...CL3US22O` | Improve the learn mode and add more videos | `35464b0` — feat(content): expand learning modules, business listings, and AI market analysis |
+| 9 | Mahee Patil | maheepatil06@gmail.com | `GCKXKI...SQXCG` | Enhance and add more AI features | `35464b0` — feat(content): expand learning modules, business listings, and AI market analysis |
 | 10 | Neeral Kothadia | neeralkothadia14@gmail.com | `GAAUOW...ULXGY2M` | Keep it in a light color | `e396d4b` — UI: Improve NeRA chat box readability and brand alignment |
-| 11 | Aditya Chavan | adichavan555@gmail.com | `GAR4Z7...ODNF7` | Add more videos in the learn mode | `e74cf22` — Add Quick Concepts documentation modal |
-| 12 | Tanishka Mahindrakar | tanishkamm05@gmail.com | `GA3JCK...OWU5CJ` | Add more AI features | `2b60a6d` — Add AI Portfolio Insights, AI Risk Auditor, and AI Market Pulse features |
+| 11 | Aditya Chavan | adichavan555@gmail.com | `GAR4Z7...ODNF7` | Add more videos in the learn mode | `35464b0` — feat(content): expand learning modules, business listings, and AI market analysis |
+| 12 | Tanishka Mahindrakar | tanishkamm05@gmail.com | `GA3JCK...OWU5CJ` | Add more AI features | `35464b0` — feat(content): expand learning modules, business listings, and AI market analysis |
 | 13 | Mayur Agarwal | mayuragarwal30@gmail.com | `GCM24D...WB73X7U` | Add more security in the logging system | `010f2ae` — Implement root Error Boundary and comprehensive Sentry integration |
-| 14 | Shivani More | moreshivani22@gmail.com | `GBTFQ2...CXQDQI` | Add more information about the business on the website | `2b60a6d` — Add AI Portfolio Insights, AI Risk Auditor, and AI Market Pulse features |
-| 15 | Saniya Shaikh | saniyashaikh66@gmail.com | `GBE7HS...YAWLMZSLODNF7` | Add more businesses | `ea92d7e` — Fix non-functional buttons and links |
+| 14 | Shivani More | moreshivani22@gmail.com | `GBTFQ2...CXQDQI` | Add more information about the business on the website | `4a2d4d6` — feat(invest): introduce savings tracker, chronological ledger, and pool insights |
+| 15 | Saniya Shaikh | saniyashaikh66@gmail.com | `GBE7HS...YAWLMZSLODNF7` | Add more businesses | `35464b0` — feat(content): expand learning modules, business listings, and AI market analysis |
 | 16 | Vaishnavi Tiwari | vaishnavitiwari0202@gmail.com | `GCLPEZ...FCL7PJT5` | Everything is good | ✅ No changes needed |
-| 17 | Aadya Gange | gangeaadya99@gmail.com | `GD5Z2X...KPGCCJ5` | Add animations to the website | `d669b0f` — Refresh ExploreView: live stats strip, visual overhaul |
-| 18 | Ajinkya Garad | ajinkyarajegarad@gmail.com | `GALCZO...GKPGCCJ5` | Add more features | `2b60a6d` — Add AI Portfolio Insights, AI Risk Auditor, and AI Market Pulse features |
-| 19 | Riya Mehta | riyamehta30@gmail.com | `GA5ZKU...7KILKLE` | Improve the UI and make it more minimal | `4e40e5e` — Branding: Implement new NestFund logo design across platform |
-| 20 | Tanishka Manthalkar | manthalkartan110@gmail.com | `GASQUF...67UVL3` | Add more videos in the learn mode | `e74cf22` — Add Quick Concepts documentation modal |
+| 17 | Aadya Gange | gangeaadya99@gmail.com | `GD5Z2X...KPGCCJ5` | Add animations to the website | `4a2d4d6` — feat(invest): introduce savings tracker, chronological ledger, and pool insights |
+| 18 | Ajinkya Garad | ajinkyarajegarad@gmail.com | `GALCZO...GKPGCCJ5` | Add more features | `35464b0` — feat(content): expand learning modules, business listings, and AI market analysis |
+| 19 | Riya Mehta | riyamehta30@gmail.com | `GA5ZKU...7KILKLE` | Improve the UI and make it more minimal | `84b8a96` — perf(core): implement lazy loading and enhance 3D scene rendering |
+| 20 | Tanishka Manthalkar | manthalkartan110@gmail.com | `GASQUF...67UVL3` | Add more videos in the learn mode | `35464b0` — feat(content): expand learning modules, business listings, and AI market analysis |
 | 21 | Aastha Patil | aasthapatil1406@gmail.com | `GAWPCO...QSNT6` | Up to date | ✅ No changes needed |
 | 22 | Rajesh Patil | rapa99@gmail.com | `GCA5J2...PYXJ4` | Everything is perfect | ✅ No changes needed |
 | 23 | Kashish Gurnani | kashishgurnani45@gmail.com | `GAXULY...EMXBE7F` | Improve alignments on the website | `c0a1101` — Fix ExploreView Sector table column alignment |
-| 24 | Ruchita Telsang | ruchitatelsang22@gmail.com | `GAGGXM...RZVDZH` | Improve the logistics | `87cc82d` — Final platform audit - all production features verified |
+| 24 | Ruchita Telsang | ruchitatelsang22@gmail.com | `GAGGXM...RZVDZH` | Improve the logistics | `84b8a96` — perf(core): implement lazy loading and enhance 3D scene rendering |
 | 25 | Surekha Lakde | lakdesurekha7@gmail.com | `GD7SC6...H4TJ3MC` | Add more information about the website and create a dashboard | `568973f` — Add live Metrics dashboard with DAU, Retention, Tx charts |
 | 26 | Poorvaja Yadav | poorvajayadav4149@gmail.com | `GB3QHJ...HRAQXA4` | Add an about us page | `0497d8a` — Add About Us, Privacy Policy, and FAQ pages |
 | 27 | Saukhya Tupe | saukhyatupe013@gmail.com | `GBKZH5...MAUBCV` | Add more compliance | `53b8ace` — Complete security checklist in SECURITY.md |
-| 28 | Aanam Khan | aanamkhan552@gmail.com | `GAGNW6...ANQJOW` | Improve the AI features | `2b60a6d` — Add AI Portfolio Insights, AI Risk Auditor, and AI Market Pulse features |
-| 29 | Shlok Malpani | malpani16shlok@gmail.com | `GB7NKI...RTZ7ZGO` | Keep users' transaction history for security and transparency | `568973f` — Add live Metrics dashboard with DAU, Retention, Tx charts |
+| 28 | Aanam Khan | aanamkhan552@gmail.com | `GAGNW6...ANQJOW` | Improve the AI features | `35464b0` — feat(content): expand learning modules, business listings, and AI market analysis |
+| 29 | Shlok Malpani | malpani16shlok@gmail.com | `GB7NKI...RTZ7ZGO` | Keep users' transaction history for security and transparency | `4a2d4d6` — feat(invest): introduce savings tracker, chronological ledger, and pool insights |
 | 30 | Dhruv Patnekar | dhruvpatnekar@gmail.com | `GB5THP...6FH65BKM` | None — best app I've used | ✅ No changes needed |
 
 ---
