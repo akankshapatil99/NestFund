@@ -1,18 +1,28 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, lazy, Suspense } from 'react';
 import { usePostHog } from 'posthog-js/react';
 import './index.css';
-import LearnView from './LearnView.jsx';
-import InvestView from './InvestView.jsx';
-import BusinessView from './BusinessView.jsx';
 import ExploreView from './ExploreView.jsx';
 import LoginView from './LoginView.jsx';
 import NeRAChat from './NeRAChat.jsx';
-import MetricsView from './MetricsView.jsx';
 import { motion, AnimatePresence } from 'framer-motion';
 import Logo from './Logo.jsx';
-import AboutView from './AboutView.jsx';
-import PrivacyView from './PrivacyView.jsx';
-import FAQView from './FAQView.jsx';
+
+// Lazy-load heavy views for faster initial page load (user feedback: improve loading speed)
+const LearnView = lazy(() => import('./LearnView.jsx'));
+const InvestView = lazy(() => import('./InvestView.jsx'));
+const BusinessView = lazy(() => import('./BusinessView.jsx'));
+const MetricsView = lazy(() => import('./MetricsView.jsx'));
+const AboutView = lazy(() => import('./AboutView.jsx'));
+const PrivacyView = lazy(() => import('./PrivacyView.jsx'));
+const FAQView = lazy(() => import('./FAQView.jsx'));
+
+// Shared loading fallback for lazy-loaded views
+const ViewLoader = () => (
+  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '50vh', gap: '16px' }}>
+    <div className="loading-dots" style={{ fontSize: '28px', color: 'var(--teal)' }}><span>●</span><span>●</span><span>●</span></div>
+    <div style={{ color: 'var(--muted)', fontSize: '13px', fontFamily: 'JetBrains Mono' }}>Loading view...</div>
+  </div>
+);
 
 function App() {
   const posthog = usePostHog();
@@ -24,6 +34,7 @@ function App() {
   const [walletAddress, setWalletAddress] = useState(null);
   const [loggedInAddress, setLoggedInAddress] = useState(localStorage.getItem('nestfund_session'));
   const [userName, setUserName] = useState(localStorage.getItem('nestfund_name') || '');
+  const [showScroll, setShowScroll] = useState(false);
 
   // If already logged in from a previous session, restore wallet
   useEffect(() => {
@@ -165,8 +176,19 @@ function App() {
         el.removeEventListener('mouseenter', handleEnter);
         el.removeEventListener('mouseleave', handleLeave);
       });
+      window.removeEventListener('scroll', checkScrollTop);
     };
   }, []);
+
+  const checkScrollTop = () => {
+    if (!showScroll && window.scrollY > 300) setShowScroll(true);
+    else if (showScroll && window.scrollY <= 300) setShowScroll(false);
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', checkScrollTop);
+    return () => window.removeEventListener('scroll', checkScrollTop);
+  }, [showScroll]);
 
   // Scroll to top on mode change
   useEffect(() => {
@@ -242,16 +264,48 @@ function App() {
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
       >
         {activeMode === 'Explore' && <ExploreView walletAddress={walletAddress} onNavigate={setActiveMode} />}
-        {activeMode === 'Learn' && <LearnView portfolioVal={portfolioVal} />}
-        {activeMode === 'Invest' && <InvestView portfolioVal={portfolioVal} c1={c1} c2={c2} c3={c3} c4={c4} walletAddress={walletAddress} />}
-        {activeMode === 'Business' && <BusinessView walletAddress={walletAddress} />}
-        {activeMode === 'Metrics' && <MetricsView />}
-        {activeMode === 'About' && <AboutView />}
-        {activeMode === 'Privacy' && <PrivacyView />}
-        {activeMode === 'FAQ' && <FAQView />}
+        <Suspense fallback={<ViewLoader />}>
+          {activeMode === 'Learn' && <LearnView portfolioVal={portfolioVal} />}
+          {activeMode === 'Invest' && <InvestView portfolioVal={portfolioVal} c1={c1} c2={c2} c3={c3} c4={c4} walletAddress={walletAddress} />}
+          {activeMode === 'Business' && <BusinessView walletAddress={walletAddress} />}
+          {activeMode === 'Metrics' && <MetricsView />}
+          {activeMode === 'About' && <AboutView />}
+          {activeMode === 'Privacy' && <PrivacyView />}
+          {activeMode === 'FAQ' && <FAQView />}
+        </Suspense>
       </motion.div>
     </AnimatePresence>
   </main>
+
+  {/* BACK TO TOP BUTTON (UX Improvement) */}
+  {showScroll && (
+    <button 
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      style={{
+        position: 'fixed',
+        bottom: '32px',
+        left: '32px',
+        width: '44px',
+        height: '44px',
+        borderRadius: '50%',
+        background: 'var(--surface2)',
+        border: '1px solid var(--border)',
+        color: 'var(--muted)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        cursor: 'pointer',
+        zIndex: 900,
+        boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+        transition: 'all 0.2s'
+      }}
+      onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--gold)'; e.currentTarget.style.borderColor = 'var(--gold)'; }}
+      onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--muted)'; e.currentTarget.style.borderColor = 'var(--border)'; }}
+      title="Back to Top"
+    >
+      ↑
+    </button>
+  )}
 
   {/* FOOTER */}
   <footer>

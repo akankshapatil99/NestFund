@@ -42,7 +42,8 @@ function SceneContent() {
 
   const blocks = useMemo(() => {
     const b = [];
-    for (let i = 0; i < 12; i++) {
+    // Primary glass blocks
+    for (let i = 0; i < 16; i++) {
       b.push({
         position: [
           (Math.random() - 0.5) * 15,
@@ -50,6 +51,17 @@ function SceneContent() {
           (Math.random() - 0.5) * 5 - 5
         ],
         delay: Math.random() * 10
+      });
+    }
+    // Additional smaller accent blocks for visual depth (user feedback: more 3D elements)
+    for (let i = 0; i < 6; i++) {
+      b.push({
+        position: [
+          (Math.random() - 0.5) * 20,
+          (Math.random() - 0.5) * 12,
+          (Math.random() - 0.5) * 3 - 8
+        ],
+        delay: Math.random() * 15
       });
     }
     return b;
