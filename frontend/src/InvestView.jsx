@@ -295,46 +295,7 @@ export default function InvestView({ walletAddress }) {
         )}
       </div>
 
-      {/* ─── Savings Goal Tracker (User Feedback: goal tracking) ─── */}
-      <div className="dashboard-card glass" style={{ marginTop: '40px', padding: '30px', borderRadius: '24px', border: '1px solid rgba(255,255,255,0.05)' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-          <h3 className="dc-title" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-            Savings Goal Tracker
-          </h3>
-          <div style={{ fontSize: '11px', color: 'var(--muted)', fontFamily: 'JetBrains Mono' }}>SET & TRACK</div>
-        </div>
-        {(() => {
-          const savedGoal = Number(localStorage.getItem('nestfund_savings_goal') || 50000);
-          const totalInvested = history.reduce((sum, tx) => sum + Number(tx.amount || 0), 0);
-          const progress = Math.min((totalInvested / savedGoal) * 100, 100);
-          return (
-            <div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '16px', marginBottom: '20px' }}>
-                <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '12px', padding: '16px', border: '1px solid var(--border)' }}>
-                  <div style={{ fontSize: '11px', color: 'var(--muted)', marginBottom: '4px' }}>Goal Amount</div>
-                  <div style={{ fontFamily: 'Syne', fontSize: '22px', fontWeight: '800', color: 'var(--gold)' }}>₹{savedGoal.toLocaleString('en-IN')}</div>
-                </div>
-                <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '12px', padding: '16px', border: '1px solid var(--border)' }}>
-                  <div style={{ fontSize: '11px', color: 'var(--muted)', marginBottom: '4px' }}>Total Invested</div>
-                  <div style={{ fontFamily: 'Syne', fontSize: '22px', fontWeight: '800', color: 'var(--green)' }}>₹{totalInvested.toLocaleString('en-IN')}</div>
-                </div>
-                <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '12px', padding: '16px', border: '1px solid var(--border)' }}>
-                  <div style={{ fontSize: '11px', color: 'var(--muted)', marginBottom: '4px' }}>Remaining</div>
-                  <div style={{ fontFamily: 'Syne', fontSize: '22px', fontWeight: '800', color: 'var(--teal)' }}>₹{Math.max(0, savedGoal - totalInvested).toLocaleString('en-IN')}</div>
-                </div>
-              </div>
-              <div style={{ background: 'rgba(255,255,255,0.05)', borderRadius: '10px', height: '12px', overflow: 'hidden', marginBottom: '8px' }}>
-                <div style={{ height: '100%', width: `${progress}%`, background: 'linear-gradient(90deg, var(--gold), var(--green))', borderRadius: '10px', transition: 'width 1s ease' }} />
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: 'var(--muted)' }}>
-                <span>{progress.toFixed(1)}% complete</span>
-                <span>Target: ₹{savedGoal.toLocaleString('en-IN')}</span>
-              </div>
-            </div>
-          );
-        })()}
-      </div>
+
 
       {/* ─── AI Portfolio Intelligence ─── */}
       <AIPortfolioInsights walletAddress={walletAddress} />
